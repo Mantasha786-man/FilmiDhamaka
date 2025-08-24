@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+     font-family: "Montserrat", sans-serif;
+     box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+}
+
+/* Prevent global color from affecting Ant Design components */
+body {
+  color: rgb(69,69,69);
+}
+
+/* Ensure Ant Design components maintain their proper styling */
+.ant-btn,
+.ant-message,
+.ant-notification,
+.ant-modal,
+.ant-spin,
+.ant-icon {
+  color: inherit;
+}
+
+/* Ensure Ant Design message styles are not overridden */
+.ant-message {
+  z-index: 9999 !important;
+}
+
+/* Ensure Ant Design message icons have proper colors */
+.ant-message-success .anticon {
+  color: #52c41a !important;
+}
+
+.ant-message-error .anticon {
+  color: #ff4d4f !important;
+}
+
+.ant-message-warning .anticon {
+  color: #faad14 !important;
+}
+
+.ant-message-info .anticon {
+  color: #1890ff !important;
+}
+
+/* Ensure Ant Design loader colors */
+.ant-spin-dot-item {
+  background-color: #1890ff !important;
+}
+
+/* Ensure button colors are not affected */
+.ant-btn-primary {
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: #40a9ff !important;
+  border-color: #40a9ff !important;
+}
+
+/* Ensure loading spinner has proper color */
+.ant-spin .ant-spin-dot i {
+  background-color: #1890ff !important;
+}

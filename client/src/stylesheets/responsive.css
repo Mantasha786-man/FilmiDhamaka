@@ -1,0 +1,302 @@
+/* Responsive Styles */
+
+/* Base styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Button responsive styles */
+@media (max-width: 640px) {
+    .btn-small {
+        padding: 0.25rem;
+        font-size: 12px;
+    }
+
+    .btn-large {
+        padding: 0.75rem;
+        font-size: 16px;
+    }
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 640px) {
+    .header {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align items */
+        padding: 0.5rem; /* Reduced padding */
+        text-align: center; /* Center all text in header */
+    }
+
+    .header > div:first-child {
+        margin-bottom: 1rem; /* Space below website name */
+        text-align: center; /* Center website name */
+    }
+
+    .header > div:nth-child(2) {
+        flex-direction: column; /* Stack navigation items vertically */
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        text-align: center; /* Center navigation text */
+        width: 100%; /* Full width for navigation */
+    }
+
+    .header > div:nth-child(2) span {
+        text-align: center; /* Center individual nav items */
+        display: block; /* Make each nav item full width */
+        padding: 0.5rem 0; /* Add vertical padding */
+    }
+
+    .header > div:last-child {
+        width: 100%; /* Full width for user section */
+        justify-content: center;
+        text-align: center; /* Center user section text */
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .text-primary {
+        font-size: 1.5rem;
+    }
+
+    .text-secondary {
+        font-size: 1rem;
+    }
+
+    .bg-primary {
+        background-color: #1a202c; /* Example color */
+    }
+
+    .bg-secondary {
+        background-color: #2d3748; /* Example color */
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+
+    .h-64 {
+        height: auto; /* Adjust height for mobile */
+    }
+
+    /* Button styles */
+    button {
+        width: 100%; /* Full width buttons */
+        padding: 0.5rem;
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns layout */
+    }
+
+    .text-primary {
+        font-size: 2rem;
+    }
+
+    .text-secondary {
+        font-size: 1.25rem;
+    }
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* Three columns layout */
+  }
+
+  .text-primary {
+    font-size:2.5rem;
+  }
+
+  .text-secondary {
+    font-size: 1.5rem;
+  }
+}
+
+/* Service Cards Responsive Styles */
+@media (max-width: 640px) {
+  .grid.grid-cols-3 {
+    grid-template-columns: 1fr !important; /* Single column on mobile */
+    gap: 1rem !important;
+  }
+  
+  .grid.grid-cols-3 > div {
+    padding: 1rem !important;
+    margin: 0.5rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > div:first-child {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > h3 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > p {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .grid.grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important; /* Two columns on tablet */
+    gap: 1.5rem !important;
+  }
+  
+  .grid.grid-cols-3 > div {
+    padding: 1.5rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > div:first-child {
+    font-size: 2.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > h3 {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .grid.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr) !important; /* Three columns on desktop */
+    gap: 2rem !important;
+  }
+  
+  .grid.grid-cols-3 > div {
+    padding: 2rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > div:first-child {
+    font-size: 3rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .grid.grid-cols-3 > div > h3 {
+    font-size: 1.3rem !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Footer Styles */
+.footer {
+    display: flex;
+    justify-content: center; /* Center footer content */
+    align-items: center;
+    padding: 0.1rem; /* Minimal padding */
+    background-color: #f4f4f4;
+    margin-top: 0.05rem; /* Very minimal gap above footer */
+    margin-bottom: 0.05rem; /* Very minimal gap below footer */
+}
+
+/* Mobile Footer Styles */
+@media (max-width: 640px) {
+    .footer {
+        padding: 0.1rem; /* Minimal padding on mobile */
+        margin-top: 0.2rem; /* Minimal gap above footer on mobile */
+        margin-bottom: 0.2rem; /* Minimal gap below footer on mobile */
+        flex-direction: column; /* Stack footer items vertically */
+        gap: 0.1rem; /* Minimal space between stacked items */
+    }
+}
+
+/* Booking Table Responsive Styles - Scroll Based */
+@media (max-width: 768px) {
+    .ant-table-wrapper {
+        overflow-x: auto !important;
+    }
+    
+    .ant-table {
+        min-width: 800px !important;
+        font-size: 12px !important;
+        padding: 0 16px !important; /* Add space on left and right */
+    }
+    
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+        padding: 12px 10px !important;
+        white-space: nowrap !important;
+    }
+    
+    .ant-table-column-title {
+        font-size: 11px !important;
+    }
+    
+    .ant-tag {
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+    }
+    
+    .ant-btn {
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+    }
+}
+
+/* For admin bookings table - hide user email on mobile */
+@media (max-width: 768px) {
+    .ant-table-thead > tr > th:first-child, /* User Email column */
+    .ant-table-tbody > tr > td:first-child {
+        display: none !important;
+    }
+}
+
+/* Seat Selection Responsive Styles */
+@media (max-width: 768px) {
+    .seats-container {
+        grid-template-columns: repeat(15, 30px) !important; /* 15 seats per row on mobile */
+        gap: 5px !important;
+        padding: 0 16px !important; /* Add padding on left and right */
+    }
+    
+    .seat {
+        height: 30px !important;
+        width: 30px !important;
+        margin: 0 3px !important; /* Add spacing between seats */
+    }
+    
+    .seat h1,
+    .selected-seat h1,
+    .booked-seat h1 {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .seats-container {
+        grid-template-columns: repeat(12, 25px) !important; /* 12 seats per row on very small screens */
+        gap: 4px !important;
+        padding: 0 10px !important;
+    }
+    
+    .seat {
+        height: 25px !important;
+        width: 25px !important;
+        margin: 0 2px !important;
+    }
+    
+    .seat h1,
+    .selected-seat h1,
+    .booked-seat h1 {
+        font-size: 10px !important;
+    }
+}

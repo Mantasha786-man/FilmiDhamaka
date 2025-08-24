@@ -1,0 +1,318 @@
+/* Flexbox classes for layout */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-1 {
+    flex: 1 1 0%;
+}
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+/* components */
+.card {
+    background-color: white;
+    border: 1px solid #b1b1b1;
+}
+.w-400 {
+    width: 400px;
+}
+.content {
+    min-height: 85vh;
+    border: 1px solid #b1b1b1;
+}
+.underline {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.uppercase {
+    text-transform: uppercase;
+}
+i {
+    font-size: 22px;
+}
+table {
+    border: 1px solid #b1b1b1;
+}
+thead th {
+    background-color: #b1b1b1 !important;
+}
+.search-input {
+    height: 60px;
+    border-radius: 5px;
+}
+.movie-card {
+    background-color: white;
+    border: 1px solid #b1b1b1;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.movie-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.movie-title {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.divider {
+    border-bottom: 1px solid #e1e1e1;
+    margin: 10px 0;
+}
+/* seats */
+.seats-container {
+    display: grid;
+    grid-template-columns: repeat(12, 50px); /* 12 seats per row */
+    gap: 8px;
+    justify-content: center;
+}
+.seat {
+    height: 30px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b1b1b1;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease;
+}
+.selected-seat {
+    background-color: #02867b;
+    color: rgb(248, 248, 248) !important;
+    font-weight: bold;
+}
+.booked-seat {
+    background-color: #b1b1b1;
+    color: rgb(104, 104, 104) !important;
+    cursor: not-allowed;
+}
+/* Ensure seat numbers stay centered */
+.seat h1,
+.selected-seat h1,
+.booked-seat h1 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+}
+/* Custom search input styling */
+.custom-search-input .ant-input {
+    color: #000 !important;
+}
+.custom-search-input .ant-input::placeholder {
+    color: #000 !important;
+    opacity: 0.8;
+}
+.custom-search-input .ant-input-group-addon button {
+    color: #000 !important;
+}
+
+/* About Page Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+.bg-gray-50 {
+    background-color: #f9fafb;
+}
+.bg-white {
+    background-color: white;
+}
+.text-center {
+    text-align: center;
+}
+.grid {
+    display: grid;
+}
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.gap-8 {
+    gap: 2rem;
+}
+.p-6 {
+    padding: 1.5rem;
+}
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.py-16 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+.py-20 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+.mb-3 {
+    margin-bottom: 0.75rem;
+}
+.mb-4 {
+    margin-bottom: 1rem;
+}
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
+.mb-8 {
+    margin-bottom: 2rem;
+}
+.mb-12 {
+    margin-bottom: 3rem;
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+.text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+}
+.text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+.text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+.font-bold {
+    font-weight: 700;
+}
+.font-semibold {
+    font-weight: 600;
+}
+.font-medium {
+    font-weight: 500;
+}
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.hover\:shadow-lg:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.transition-shadow {
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+.transition-colors {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+.duration-300 {
+    transition-duration: 300ms;
+}
+.hover\:bg-opacity-90:hover {
+    --tw-bg-opacity: 0.9;
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+.object-cover {
+    object-fit: cover;
+}
+.h-64 {
+    height: 16rem;
+}
+.w-full {
+    width: 100%;
+}
+.max-w-2xl {
+    max-width: 42rem;
+}
+.max-w-3xl {
+    max-width: 48rem;
+}
+.opacity-90 {
+    opacity: 0.9;
+}
+
+/* Responsive design */
+@media (min-width: 768px) {
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .md\:text-5xl {
+        font-size: 3rem;
+        line-height: 1;
+    }
+    .md\:text-2xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
+@media (min-width: 1024px) {
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
