@@ -35,6 +35,17 @@ const PORT = process.env.PORT || 5000;
 const path=require('path');
 __dirname=path.resolve();
 
+// Global error handlers for debugging
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  console.error('Stack:', err.stack);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise);
+  console.error('Reason:', reason);
+});
+
 //render deployment
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));
