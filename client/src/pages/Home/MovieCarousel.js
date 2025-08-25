@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import './MovieCarousel.css';
 
 const MovieCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { user } = useSelector((state) => state.users);
   
   const movies = [
     {
@@ -61,7 +59,7 @@ const MovieCarousel = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [movies.length]);
 
   return (
     <div>
