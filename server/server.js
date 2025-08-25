@@ -12,10 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/movies', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect('mongodb://localhost:27017/movies')
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
 
@@ -30,21 +27,10 @@ app.use('/api/theatres',theatreRoute);
 app.use('/api/bookings', bookingsRoute);
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 
 const path=require('path');
 __dirname=path.resolve();
-
-// Global error handlers for debugging
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-  console.error('Stack:', err.stack);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise);
-  console.error('Reason:', reason);
-});
 
 //render deployment
 if (process.env.NODE_ENV === 'production') {
@@ -54,4 +40,4 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));
