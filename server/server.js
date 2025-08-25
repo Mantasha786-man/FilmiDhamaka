@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/movies';
+const mongoURI = process.env.MONGO_URL || 'mongodb://localhost:27017/movies';
 console.log('Using MongoDB URI:', mongoURI);
 
 mongoose.connect(mongoURI, {
