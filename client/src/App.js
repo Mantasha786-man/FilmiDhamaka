@@ -22,7 +22,15 @@ import Contact from './pages/Contact';
 import Review from './pages/Review';
 // Main App component - saari routing aur navigation handle karta hai
 // This is the root component that handles routing and navigation for the entire Movie Booking System
+import React, { useEffect, useState } from 'react';
+
 function App() {
+    const [refreshCount, setRefreshCount] = useState(0);
+
+    useEffect(() => {
+        setRefreshCount(prevCount => prevCount + 1);
+    }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* BrowserRouter: React Router ka main component jo routing enable karta hai */}
