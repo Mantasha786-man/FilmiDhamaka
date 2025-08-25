@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ MongoDB connection - using local MongoDB (MongoDB Compass)
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/moviebooking';
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/movies';
 console.log('Using MongoDB URI:', mongoURI);
 
 mongoose.connect(mongoURI)
