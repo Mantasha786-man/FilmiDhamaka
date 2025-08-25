@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -31,7 +32,6 @@ app.use('/api/theatres',theatreRoute);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-const path = require('path');
 __dirname = path.resolve();
 //render deployement
 if (process.env.NODE_ENV === 'production') {
