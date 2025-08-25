@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; 
 import { Form, message } from "antd";
 import 'antd/dist/reset.css';
 import Button from "../../components/button";

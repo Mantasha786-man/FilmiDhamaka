@@ -54,7 +54,8 @@ function App() {
             } />
           </Routes>  
         </main>
-        <Footer />
+        {/* Conditionally render Footer based on the current route */}
+        {window.location.pathname !== '/login' && window.location.pathname !== '/register' && <Footer />}
       </BrowserRouter>
     </div>
   );
