@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import PageTitle from '../../components/PageTitle';
 
 // Hardcoded testimonials data - These are pre-defined reviews that show by default
 const testimonials = [

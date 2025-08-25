@@ -1,19 +1,15 @@
-import React, { useEffect } from "react";
-import { Col, message, Row, Tooltip } from "antd";
+import React, { useEffect, useCallback } from "react";
+import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { GetAllMovies } from "../../apiscalls/movies";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
 import MovieCarousel from "./MovieCarousel";
-
 
 function Home() {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
   const [movies, setMovies] = React.useState([]);
   
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await GetAllMovies();
@@ -29,16 +25,15 @@ function Home() {
         error?.message || "An error occurred while fetching movies"
       );
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
   
   return (
     <div>
       <MovieCarousel />
-
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import Button from "../../components/button";
 import MovieForm from "./MovieForm";
 import moment from "moment";
@@ -14,7 +14,7 @@ function MoviesList() {
   const [formType, setFormType] = React.useState("add");
   const dispatch = useDispatch();
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await GetAllMovies();
@@ -28,7 +28,7 @@ function MoviesList() {
       dispatch(HideLoading());
       message.error(error?.message || "An error occurred while fetching movies");
     }
-  };
+  }, [dispatch]);
 
   const handleDelete = async (movieId) => {
     try {

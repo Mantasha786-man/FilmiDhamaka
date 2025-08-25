@@ -1,5 +1,4 @@
 import React from 'react';
-import PageTitle from '../../components/PageTitle';
 
 function Contact() {
   const contactInfo = [

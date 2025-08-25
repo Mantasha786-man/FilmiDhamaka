@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Table, Tag, Button, message } from 'antd';
 import { HideLoading, ShowLoading } from '../../redux/loadersSlice';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ function BookingsList() {
   const [bookings, setBookings] = useState([]);
   const dispatch = useDispatch();
 
-  const getBookings = async () => {
+  const getBookings = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await GetAllBookings();
@@ -23,7 +23,7 @@ function BookingsList() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   const handleConfirmBooking = async (bookingId) => {
     try {
@@ -44,7 +44,7 @@ function BookingsList() {
 
   useEffect(() => {
     getBookings();
-  }, []);
+  }, [getBookings]);
 
   const columns = [
     {

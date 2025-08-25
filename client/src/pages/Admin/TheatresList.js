@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { message, Table } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
-import { GetAllTheatres, UpdateTheatre, DeleteTheatre } from "../../apiscalls/theatres";
+import { GetAllTheatres, DeleteTheatre } from "../../apiscalls/theatres";
 import Shows from "../Profile/Shows";
 import TheatreForm from "../Profile/TheatreForm";
 import Button from "../../components/button";
@@ -15,7 +15,7 @@ function TheatresList() {
   const [formType, setFormType] = useState("add");
   const dispatch = useDispatch();
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       dispatch(ShowLoading());
       const response = await GetAllTheatres();
@@ -31,7 +31,7 @@ function TheatresList() {
         error?.message || "An error occurred while fetching theatres"
       );
     }
-  };
+  }, [dispatch]);
 
   const handleDelete = async (theatreId) => {
     try {
@@ -103,7 +103,7 @@ function TheatresList() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   return (
     <div>
