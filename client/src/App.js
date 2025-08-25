@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Home from "./pages/Home";
 import Footer from './components/Footer'; // Footer component ko import karna
 import Login from "./pages/Login";
