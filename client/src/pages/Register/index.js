@@ -3,20 +3,20 @@ import { Form, message } from "antd";
 import 'antd/dist/reset.css';
 import Button from "../../components/button";
 import { Link, useNavigate } from "react-router-dom";
-import { RegisterUser } from "../../apiscalls/users";
+import { api } from "../../apiscalls/api";
 
 function Register() {
   const navigate = useNavigate();
   
   const onFinish = async (values) => {
     try {
-      const response = await RegisterUser(values);
-      if(response.data.success){
-        message.success(response.data.message);
-        localStorage.setItem('token', response.data.data);
+      const response = await api.register(values);
+      if(response.success){
+        message.success(response.message);
+        localStorage.setItem('token', response.data);
         navigate("/");
       } else {
-        message.error(response.data.message);
+        message.error(response.message);
       }
     } catch (error) {
       message.error(error.message);

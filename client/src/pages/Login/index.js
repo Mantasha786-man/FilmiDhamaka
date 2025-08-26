@@ -4,7 +4,8 @@ import 'antd/dist/reset.css';
 import '@ant-design/v5-patch-for-react-19';
 import Button from "../../components/button";
 import { Link, useNavigate } from 'react-router-dom';
-import { LoginUser, GetCurrentUser } from "../../apiscalls/users";
+import { api } from "../../apiscalls/api";
+import { GetCurrentUser } from "../../apiscalls/users";
 import { useDispatch } from "react-redux";
 import { SetUser } from "../../redux/usersSlice";
 
@@ -14,12 +15,12 @@ function Login() {
   
   const onFinish = async(values) => {
     try {
-      const response = await LoginUser(values);
+      const response = await api.login(values);
       
       // Handle response properly
-      if(response && response.data) {
+      if(response) {
         
-        const { success, message: msg, data } = response.data;
+        const { success, message: msg, data } = response;
         
         if(success) {
           message.success(msg || "Login successful!");

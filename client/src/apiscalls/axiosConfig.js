@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000', // backend URL
+  baseURL: 'https://filmi-dhamaka.vercel.app', // backend URL
   headers: {
     'Content-Type': 'application/json',
   }
