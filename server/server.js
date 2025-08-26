@@ -5,9 +5,9 @@ require('dotenv').config();
 
 const app = express();
 
-// Allow CORS for all origins (frontend: localhost:3000)
+// Allow CORS for all origins (frontend: localhost:3000 and netlify)
 app.use(cors({
-  origin: 'https://filmidhamaka.netlify.app',
+  origin: ['https://filmidhamaka.netlify.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
