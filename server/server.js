@@ -29,10 +29,11 @@ app.use('/api/movies',movieRoutes);
 app.use('/api/theatres',theatreRoute);
  app.use('/api/bookings', bookingsRoute);
 
-app.use('/', (req, res) => {
-  res.send({
-    activeStatus: true,
-    error: false
+app.get('/', (req, res) => {
+  res.json({
+    success:true,
+    message: 'backend is running',
+    timestamp: new Date()
   });
 });
 // Start server
