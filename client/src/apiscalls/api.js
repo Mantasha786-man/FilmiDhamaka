@@ -1,40 +1,28 @@
-const BASE_URL = "https://filmi-dhamaka.vercel.app";
+import { axiosInstance } from './axiosConfig';
 
 export const api = {
   login: async (data) => {
-    const res = await fetch(`${BASE_URL}/api/users/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    return res.json();
+    const response = await axiosInstance.post('/api/users/login', data);
+    return response.data;
   },
 
   register: async (data) => {
-    const res = await fetch(`${BASE_URL}/api/users/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    return res.json();
+    const response = await axiosInstance.post('/api/users/register', data);
+    return response.data;
   },
 
   getMovies: async () => {
-    const res = await fetch(`${BASE_URL}/api/movies`);
-    return res.json();
+    const response = await axiosInstance.get('/api/movies');
+    return response.data;
   },
 
   getTheatres: async () => {
-    const res = await fetch(`${BASE_URL}/api/theatres`);
-    return res.json();
+    const response = await axiosInstance.get('/api/theatres');
+    return response.data;
   },
 
   bookTicket: async (data) => {
-    const res = await fetch(`${BASE_URL}/api/bookings`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    return res.json();
+    const response = await axiosInstance.post('/api/bookings', data);
+    return response.data;
   }
 };
