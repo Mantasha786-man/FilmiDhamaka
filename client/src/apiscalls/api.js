@@ -2,7 +2,7 @@ const BASE_URL = "https://filmi-dhamaka.vercel.app";
 
 export const api = {
   login: async (data) => {
-    const res = await fetch(`${BASE_URL}/api/users/login`, {
+    const res = await fetch(`${BASE_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -11,7 +11,7 @@ export const api = {
   },
 
   register: async (data) => {
-    const res = await fetch(`${BASE_URL}/api/users/register`, {
+    const res = await fetch(`${BASE_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
