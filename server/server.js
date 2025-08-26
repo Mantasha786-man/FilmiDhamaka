@@ -7,7 +7,7 @@ const app = express();
 
 // Allow CORS for all origins (frontend: localhost:3000)
 app.use(cors({
-  origin: 'http://filmidhamaka.netlify.app',
+  origin: 'https://filmidhamaka.netlify.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
