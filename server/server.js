@@ -15,10 +15,12 @@ app.use(cors({
 // Parse JSON body
 app.use(express.json());
 
-// Connect to MongoDB
+// Connect to MongoDB with increased timeout
 mongoose.connect('mongodb+srv://siddikianjum321:Mantasha12@cluster0.wsnrb0q.mongodb.net/movies?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+  socketTimeoutMS: 45000, // 45 seconds socket timeout
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
