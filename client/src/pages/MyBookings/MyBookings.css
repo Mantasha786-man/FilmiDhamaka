@@ -1,0 +1,153 @@
+.my-bookings-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.bookings-grid {
+  margin-top: 20px;
+}
+
+.booking-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.movie-poster-placeholder {
+  height: 180px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 20px;
+}
+
+.movie-poster-placeholder i {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.movie-poster-placeholder h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.movie-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.status-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.booking-details {
+  padding: 8px 0;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+.detail-item i {
+  margin-right: 8px;
+  font-size: 14px;
+  color: #667eea;
+  min-width: 16px;
+}
+
+.detail-item .amount {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.no-bookings {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-bookings h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .my-bookings-container {
+    padding: 15px;
+  }
+  
+  .booking-card {
+    margin-bottom: 16px;
+  }
+  
+  .movie-poster-placeholder {
+    height: 150px;
+  }
+  
+  .movie-poster-placeholder i {
+    font-size: 36px;
+  }
+  
+  .booking-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .status-tag {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-bookings-container {
+    padding: 10px;
+  }
+  
+  .movie-poster-placeholder {
+    height: 120px;
+    padding: 15px;
+  }
+  
+  .movie-poster-placeholder i {
+    font-size: 28px;
+  }
+  
+  .movie-poster-placeholder h3 {
+    font-size: 14px;
+  }
+  
+  .detail-item {
+    font-size: 12px;
+  }
+}

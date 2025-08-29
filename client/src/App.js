@@ -10,7 +10,7 @@ import "./stylesheets/coustom.css";
 import "./stylesheets/formelements.css";
 import "./stylesheets/sizes.css";
 import "./stylesheets/theme.css";
-import Profile from './pages/Profile';
+import MyBookings from './pages/MyBookings';
 import Admin from './pages/Admin';
 import './index.css';
 import TheatresForMovie from './pages/TheatreForMovie';
@@ -46,7 +46,7 @@ function AppContent() {
           <Route path='/review' element={<ProtectedRoute><Review /></ProtectedRoute>} />
           <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie /></ProtectedRoute>} />
           <Route path='/book-show/:id' element={<ProtectedRoute><BookShow /></ProtectedRoute>} />
-          <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path='/my-bookings' element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
           <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           
           {/* Public Routes: Inhe access karne ke liye user logged out hona chahiye */}

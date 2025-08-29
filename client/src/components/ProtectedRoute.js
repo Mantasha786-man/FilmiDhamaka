@@ -53,14 +53,6 @@ function ProtectedRoute({ children }) {
     }
   }, [user, navigate, getCurrentUser]);
 
-  const handleProfileClick = () => {
-    if (user?.isAdmin) {
-      navigate("/admin");
-    } else {
-      navigate("/profile");
-    }
-  };
-
   const showEditModal = () => {
     form.setFieldsValue({
       name: user?.name,
@@ -126,6 +118,12 @@ function ProtectedRoute({ children }) {
           </span>
           <span 
             className="cursor-pointer hover:underline p-1"
+            onClick={() => navigate("/my-bookings")}
+          >
+            My Bookings
+          </span>
+          <span 
+            className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/about")}
           >
             About
@@ -148,10 +146,8 @@ function ProtectedRoute({ children }) {
           <i className="ri-shield-user-line text-primary" style={{ fontSize: '18px' }}></i>
           
           <h1 
-            className="text-sm underline cursor-pointer"
-            onClick={handleProfileClick}
-            style={{ cursor: 'pointer' }}
-            title="Click to view your bookings"
+            className="text-sm"
+            title="Your profile"
           >
             {user?.name || 'User'}
           </h1>
