@@ -1,40 +1,29 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+// Import URL from environment variables
+const MONGO_URL = process.env.MONGO_URL ;
 
-let isConnected = false; // connection status track
-
-const connectDB = async () => {
-  if (isConnected) {
-    console.log("✅ MongoDB already connected");
-    return;
-  }
-
-  try {
-    const MONGO_URL = process.env.MONGO_URL;
-
-    await mongoose.connect(MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // 5 sec timeout
+mongoose.connect(MONGO_URL)
+    .then(() => {
+        console.log("MongoDB connection successful");
+    })
+    .catch((err) => {
+        console.log("MongoDB connection failed:", err.message);
     });
 
-    isConnected = true;
-    console.log("✅ MongoDB connection successful");
+mongoose.set('strictQuery', false);
 
-    mongoose.connection.on("connected", () => {
-      console.log("✅ MongoDB connection established");
-    });
+const connection = mongoose.connection;
 
-    mongoose.connection.on("error", (err) => {
-      console.error("❌ MongoDB connection error:", err.message);
-    });
+connection.on('connected', () => {
+    console.log("MongoDB connection established");
+});
 
-    mongoose.connection.on("disconnected", () => {
-      console.log("⚠ MongoDB connection disconnected");
-    });
+connection.on('error', (err) => {
+    console.log("MongoDB connection error:", err.message);
+});
 
-  } catch (err) {
-    console.error("❌ MongoDB connection failed:", err.message);
-  }
-};
+connection.on('disconnected', () => {
+    console.log("MongoDB connection disconnected");
+});
 
-module.exports = connectDB;
+module.exports = connection;
