@@ -19,6 +19,7 @@ function BookShow() {
   const [show, setShow] = React.useState(null);
   const [selectedseats, setSelectedSeats] = React.useState([]);
   const [paymentModalVisible, setPaymentModalVisible] = React.useState(false);
+  const [localBookedSeats, setLocalBookedSeats] = React.useState([]);
   const [form] = Form.useForm();
   const params = useParams();
   const dispatch = useDispatch();
@@ -59,6 +60,10 @@ function BookShow() {
         setPaymentModalVisible(false);
         setSuccessModalVisible(true);
         form.resetFields();
+        // Add the booked seats to local state to mark them as booked
+        setLocalBookedSeats([...localBookedSeats, ...selectedseats]);
+        // Clear selected seats after booking
+        setSelectedSeats([]);
       } else {
         message.error(response.message);
       }
@@ -115,8 +120,9 @@ function BookShow() {
             seatClass = "selected-seat";
           }
 
-          // Check if seat is booked
-          if (show.bookedSeats && show.bookedSeats.includes(seatNumber)) {
+          // Check if seat is booked (from backend or local state)
+          if ((show.bookedSeats && show.bookedSeats.includes(seatNumber)) || 
+              localBookedSeats.includes(seatNumber)) {
             seatClass = "booked-seat";
           }
 
@@ -126,8 +132,9 @@ function BookShow() {
               key={seatNumber}
               className={seatClass}
               onClick={() => {
-                // Don't allow selection of booked seats
-                if (show.bookedSeats && show.bookedSeats.includes(seatNumber)) {
+                // Don't allow selection of booked seats (from backend or local state)
+                if ((show.bookedSeats && show.bookedSeats.includes(seatNumber)) || 
+                    localBookedSeats.includes(seatNumber)) {
                   return;
                 }
 
@@ -266,7 +273,7 @@ function BookShow() {
         <CheckCircleOutlined style={{ fontSize: '48px', color: '#52c41a', marginBottom: '16px' }} />
         <p>Your booking has been submitted successfully!</p>
         <p><strong>Status: Pending Admin Approval</strong></p>
-        <p>Your booking will appear in your profile once approved by the administrator.</p>
+        <p>After admin approval, your booking will appear in the My Bookings section of the menu.</p>
       </div>
     </Modal>
     
