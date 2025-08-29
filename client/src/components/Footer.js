@@ -1,12 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Footer = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+
+    // Check on mount
+    checkMobile();
+
+    // Add event listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Mobile responsive styles
+  const mobileStyles = {
+    container: {
+      ...styles.container,
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      gap: '0.5rem' // Reduced gap between sections
+    },
+    section: {
+      ...styles.section,
+      flex: '1 1 100%',
+      minWidth: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      marginBottom: '0.5rem' // Reduced margin between sections
+    },
+    list: {
+      ...styles.list,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.3rem' // Reduced gap between list items
+    },
+    socialIcons: {
+      ...styles.socialIcons,
+      justifyContent: 'center',
+      gap: '0.8rem' // Reduced gap between social icons
+    }
+  };
+
+  const currentStyles = isMobile ? mobileStyles : styles;
+
   return (
     <footer style={styles.footer}>
-      <div style={styles.container}>
+      <div style={currentStyles.container}>
 
         {/* About Section */}
-        <div style={styles.section}>
+        <div style={currentStyles.section}>
           <h3 style={styles.title}>🎬 FilmiDhamaka</h3>
           <p style={styles.text}>
             The ultimate movie booking destination — from blockbusters to indie gems, we bring cinema to your fingertips.
@@ -14,9 +65,9 @@ const Footer = () => {
         </div>
 
         {/* Quick Menu (no a tags) */}
-        <div style={styles.section}>
+        <div style={currentStyles.section}>
           <h4 style={styles.subtitle}>Menu</h4>
-          <ul style={styles.list}>
+          <ul style={currentStyles.list}>
             <li><span>Home</span></li>
             <li><span>About</span></li>
             <li><span>Movies</span></li>
@@ -26,7 +77,7 @@ const Footer = () => {
         </div>
 
         {/* Contact Section */}
-        <div style={styles.section}>
+        <div style={currentStyles.section}>
           <h4 style={styles.subtitle}>Contact</h4>
           <p style={styles.text}>📍 Andheri West, Mumbai</p>
           <p style={styles.text}>📞 +91-9876543210</p>
@@ -34,9 +85,9 @@ const Footer = () => {
         </div>
 
         {/* Social Media */}
-        <div style={styles.section}>
+        <div style={currentStyles.section}>
           <h4 style={styles.subtitle}>Follow Us</h4>
-          <div style={styles.socialIcons}>
+          <div style={currentStyles.socialIcons}>
             <a href="https://facebook.com" target="_blank" rel="noreferrer" style={styles.icon}><i className="fab fa-facebook-f"></i></a>
             <a href="https://instagram.com" target="_blank" rel="noreferrer" style={styles.icon}><i className="fab fa-instagram"></i></a>
             <a href="https://twitter.com" target="_blank" rel="noreferrer" style={styles.icon}><i className="fab fa-twitter"></i></a>

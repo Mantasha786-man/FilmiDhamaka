@@ -254,14 +254,6 @@ body {
     }
 }
 
-/* For admin bookings table - hide user email on mobile */
-@media (max-width: 768px) {
-    .ant-table-thead > tr > th:first-child, /* User Email column */
-    .ant-table-tbody > tr > td:first-child {
-        display: none !important;
-    }
-}
-
 /* Seat Selection Responsive Styles */
 @media (max-width: 768px) {
     .seats-container {
@@ -301,4 +293,65 @@ body {
     .booked-seat h1 {
         font-size: 10px !important;
     }
+}
+
+/* Movies menu spacing for responsive phone layout */
+@media (max-width: 640px) {
+  .mb-8.flex.justify-center > .w-full.max-w-6xl {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  /* Add spacing for movie cards on mobile */
+  .ant-row.ant-row-center {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+  
+  /* Add spacing for search input on mobile */
+  .mb-8.flex.justify-center .ant-input-search {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    width: calc(100% - 32px) !important;
+  }
+}
+
+/* Search input black border */
+.custom-search-input .ant-input {
+  border: 2px solid #6e6c6c !important;
+}
+
+.custom-search-input .ant-input:focus {
+  border-color:  #6e6c6c!important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.custom-search-input .ant-input-group-addon .ant-btn {
+  border: 2px solid  #6e6c6c !important;
+  border-left: none !important;
+}
+
+/* Admin page responsive spacing */
+@media (max-width: 640px) {
+  /* Add left spacing for admin title */
+  .text-xl.uppercase {
+    margin-left: 16px !important;
+  }
+  
+  /* Add left spacing for admin tabs */
+  .ant-tabs {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+  
+  /* Add left spacing for tab content */
+  .ant-tabs-content-holder {
+    padding-left: 8px !important;
+  }
+  
+  /* Add left spacing for tables in admin lists */
+  .ant-table-wrapper {
+    margin-left: 2px !important;
+    margin-right:2px !important;
+  }
 }
