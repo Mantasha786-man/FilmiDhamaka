@@ -18,7 +18,7 @@ function ProtectedRoute({ children }) {
     try {
       dispatch(SetLoading(true));
       const response = await GetCurrentUser();
-      
+
       if (response.success) {
         dispatch(SetUser(response.data));
       } else {
@@ -31,7 +31,7 @@ function ProtectedRoute({ children }) {
       console.error("Auth error:", error);
       dispatch(SetUser(null));
       localStorage.removeItem("token");
-      
+
       if (error.response?.status === 401) {
         message.error("Session expired. Please login again.");
       } else {
@@ -65,7 +65,7 @@ function ProtectedRoute({ children }) {
     try {
       setUpdateLoading(true);
       const response = await axiosInstance.put("/api/users/update-profile", values);
-      
+
       if (response.data.success) {
         message.success("Profile updated successfully!");
         dispatch(SetUser(response.data.data));
@@ -90,76 +90,91 @@ function ProtectedRoute({ children }) {
     );
   }
 
+  // Role-based access control for admin route
+  if (window.location.pathname.startsWith("/admin") && !user?.isAdmin) {
+    message.error("Access denied. Admins only.");
+    navigate("/");
+    return null;
+  }
+
   return user && (
     <div className="layout">
       <div className="header bg-primary flex justify-between items-center p-2">
         {/* Website Name on Left */}
-        <div 
+        <div
           className="text-white text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/")}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         >
           FilmiDhamaka
         </div>
-        
+
         {/* Navigation Menu - Centered */}
         <div className="flex gap-1 text-white justify-center" style={{ flex: 1 }}>
-          <span 
+          <span
             className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/")}
           >
             Home
           </span>
-          <span 
+          <span
             className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/movies")}
           >
             Movies
           </span>
-          <span 
+          <span
             className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/my-bookings")}
           >
             My Bookings
           </span>
-          <span 
+          <span
             className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/about")}
           >
             About
           </span>
-          <span 
+          <span
             className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/contact")}
           >
             Contact
           </span>
-          <span 
+          <span
             className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/review")}
           >
             Review
           </span>
         </div>
-        
+
         <div className="bg-white p-1 flex items-center gap-1 br-1">
-          <i className="ri-shield-user-line text-primary" style={{ fontSize: '18px' }}></i>
-          
-          <h1 
+          <i className="ri-shield-user-line text-primary" style={{ fontSize: "18px" }}></i>
+
+          <h1
             className="text-sm"
-            title="Your profile"
+            title={user?.isAdmin ? "Admin Panel" : "Your profile"}
+            onClick={() => {
+              if (user?.isAdmin) {
+                navigate("/admin");
+              }
+            }}
+            style={{ cursor: user?.isAdmin ? "pointer" : "default" }}
           >
-            {user?.name || 'User'}
+            {user?.name || "User"}
           </h1>
-          
-          {/* Edit Icon */}
-          <i 
-            className="ri-edit-line text-primary cursor-pointer ml-1"
-            onClick={showEditModal}
-            style={{ cursor: 'pointer', marginLeft: '5px', fontSize: '20px' }}
-            title="Edit Profile"
-          ></i>
-          <i 
+
+          {/* Edit Icon - Only show for non-admin users */}
+          {!user?.isAdmin && (
+            <i
+              className="ri-edit-line text-primary cursor-pointer ml-1"
+              onClick={showEditModal}
+              style={{ cursor: "pointer", marginLeft: "5px", fontSize: "20px" }}
+              title="Edit Profile"
+            ></i>
+          )}
+          <i
             className="ri-logout-box-r-line text-primary cursor-pointer ml-1"
             onClick={() => {
               localStorage.removeItem("token");
@@ -167,7 +182,7 @@ function ProtectedRoute({ children }) {
               message.success("Logged out successfully");
               navigate("/login");
             }}
-            style={{ cursor: 'pointer', marginLeft: '5px', fontSize: '20px' }}
+            style={{ cursor: "pointer", marginLeft: "5px", fontSize: "20px" }}
             title="Logout"
           ></i>
         </div>
@@ -194,7 +209,7 @@ function ProtectedRoute({ children }) {
             name="name"
             rules={[{ required: true, message: "Please enter your name!" }]}
           >
-            <Input 
+            <Input
               prefix={<i className="ri-user-line" />}
               placeholder="Enter your name"
             />
@@ -208,7 +223,7 @@ function ProtectedRoute({ children }) {
               { type: "email", message: "Please enter a valid email!" }
             ]}
           >
-            <Input 
+            <Input
               prefix={<i className="ri-mail-line" />}
               placeholder="Enter your email"
             />
@@ -219,7 +234,7 @@ function ProtectedRoute({ children }) {
             name="password"
             rules={[{ min: 6, message: "Password must be at least 6 characters!" }]}
           >
-            <Input.Password 
+            <Input.Password
               prefix={<i className="ri-lock-line" />}
               placeholder="Enter new password"
             />
@@ -229,8 +244,8 @@ function ProtectedRoute({ children }) {
             <Button onClick={() => setIsProfileModalVisible(false)}>
               Cancel
             </Button>
-            <Button 
-              type="primary" 
+            <Button
+              type="primary"
               htmlType="submit"
               loading={updateLoading}
             >
