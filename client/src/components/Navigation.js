@@ -17,9 +17,6 @@ const Navigation = () => {
       <Menu.Item key="about">
         <Link to="/about">About</Link>
       </Menu.Item>
-      <Menu.Item key="service">
-        <Link to="/service">Service</Link>
-      </Menu.Item>
       <Menu.Item key="contact">
         <Link to="/contact">Contact</Link>
       </Menu.Item>

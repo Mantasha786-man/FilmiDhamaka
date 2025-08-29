@@ -17,7 +17,6 @@ import TheatresForMovie from './pages/TheatreForMovie';
 import BookShow from './pages/BookShow';
 import Movies from './pages/Movies';
 import About from './pages/About';
-import Service from './pages/Service';
 import Contact from './pages/Contact';
 import Review from './pages/Review';
 // Main App component - saari routing aur navigation handle karta hai
@@ -43,7 +42,6 @@ function AppContent() {
           <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path='/movies' element={<ProtectedRoute><Movies /></ProtectedRoute>} />
           <Route path='/about' element={<ProtectedRoute><About /></ProtectedRoute>} />
-          <Route path='/service' element={<ProtectedRoute><Service /></ProtectedRoute>} />
           <Route path='/contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
           <Route path='/review' element={<ProtectedRoute><Review /></ProtectedRoute>} />
           <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie /></ProtectedRoute>} />
@@ -79,4 +77,3 @@ function App() {
 }
 
 export default App;
-
