@@ -165,15 +165,13 @@ function ProtectedRoute({ children }) {
             {user?.name || "User"}
           </h1>
 
-          {/* Edit Icon - Only show for non-admin users */}
-          {!user?.isAdmin && (
-            <i
-              className="ri-edit-line text-primary cursor-pointer ml-1"
-              onClick={showEditModal}
-              style={{ cursor: "pointer", marginLeft: "5px", fontSize: "20px" }}
-              title="Edit Profile"
-            ></i>
-          )}
+          {/* Edit Icon - Show for all users */}
+          <i
+            className="ri-edit-line text-primary cursor-pointer ml-1"
+            onClick={showEditModal}
+            style={{ cursor: "pointer", marginLeft: "5px", fontSize: "20px" }}
+            title="Edit Profile"
+          ></i>
           <i
             className="ri-logout-box-r-line text-primary cursor-pointer ml-1"
             onClick={() => {
