@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const connectDB = require('./config/dbconfig');
 require('dotenv').config();
 
 const app = express();
@@ -14,6 +15,9 @@ app.use(cors({
 
 // Parse JSON body
 app.use(express.json());
+
+//connect db only once 
+connectDB();
 
 // Connect to MongoDB with increased timeout
 mongoose.connect('mongodb+srv://siddikianjum321:Mantasha12@cluster0.wsnrb0q.mongodb.net/movies?retryWrites=true&w=majority&appName=Cluster0', {
@@ -45,3 +49,6 @@ app.get('/', (req, res) => {
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+module.exports = app;
