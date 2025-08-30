@@ -14,6 +14,9 @@ function ProtectedRoute({ children }) {
   const [form] = Form.useForm();
   const [updateLoading, setUpdateLoading] = useState(false);
 
+  // New state for user details modal
+  const [isUserDetailsModalVisible, setIsUserDetailsModalVisible] = useState(false);
+
   const getCurrentUser = useCallback(async () => {
     try {
       dispatch(SetLoading(true));
@@ -61,6 +64,11 @@ function ProtectedRoute({ children }) {
     setIsProfileModalVisible(true);
   };
 
+  // New function to show user details modal
+  const showUserDetailsModal = () => {
+    setIsUserDetailsModalVisible(true);
+  };
+
   const handleUpdateProfile = async (values) => {
     try {
       setUpdateLoading(true);
@@ -96,6 +104,9 @@ function ProtectedRoute({ children }) {
     navigate("/");
     return null;
   }
+
+  // Format registration date
+  const registrationDate = user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A";
 
   return user && (
     <div className="layout">
@@ -150,7 +161,14 @@ function ProtectedRoute({ children }) {
         </div>
 
         <div className="bg-white p-1 flex items-center gap-1 br-1">
-          <i className="ri-shield-user-line text-primary" style={{ fontSize: "18px" }}></i>
+          {/* Dummy user image replacing icon */}
+          <img
+            src="https://tse4.mm.bing.net/th/id/OIP.odQMOHa9FGD_Hp44WNaZxwHaHa?pid=Api&P=0&h=180"
+            alt="User"
+            style={{ cursor: "pointer", width: 28, height: 28, borderRadius: "50%", border: "1px solid #ccc" }}
+            onClick={showUserDetailsModal}
+            title="User Details"
+          />
 
           <h1
             className="text-sm"
@@ -251,6 +269,26 @@ function ProtectedRoute({ children }) {
             </Button>
           </div>
         </Form>
+      </Modal>
+
+      {/* User Details Modal */}
+      <Modal
+        title="User Details"
+        open={isUserDetailsModalVisible}
+        onCancel={() => setIsUserDetailsModalVisible(false)}
+        footer={null}
+      >
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <img
+            src="https://tse4.mm.bing.net/th/id/OIP.odQMOHa9FGD_Hp44WNaZxwHaHa?pid=Api&P=0&h=180"
+            alt="User"
+            style={{ width: 50, height: 50, borderRadius: "50%", border: "2px solid #ccc" }}
+          />
+        </div>
+        <p><strong>Name:</strong> {user?.name}</p>
+        <p><strong>Email:</strong> {user?.email}</p>
+        <p><strong>Registered On:</strong> {registrationDate}</p>
+        <p><strong>Role:</strong> {user?.isAdmin ? "Admin" : "User"}</p>
       </Modal>
     </div>
   );
