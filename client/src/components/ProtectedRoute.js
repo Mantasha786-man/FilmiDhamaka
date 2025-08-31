@@ -106,7 +106,10 @@ function ProtectedRoute({ children }) {
   }
 
   // Format registration date
-  const registrationDate = user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A";
+  const registrationDate = user?.createdAt ? (() => {
+    const date = new Date(user.createdAt);
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+  })() : "N/A";
 
   return user && (
     <div className="layout">
