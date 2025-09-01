@@ -8,6 +8,9 @@ router.post('/add-movie',authMiddleware,async(req,res)=>{
 
     try{
         const newMovie=new Movie(req.body);
+
+
+
         await newMovie.save();
         res.send({
             success:true,
@@ -18,7 +21,7 @@ router.post('/add-movie',authMiddleware,async(req,res)=>{
             success:false,
             message:error.message
         })
-    }   
+    }
 });
 
 //get all movies
@@ -87,5 +90,8 @@ router.get("/get-movie-by-id/:id",async(req,res)=>{
         });
     }
 });
+
+
+
 module.exports=router;
 

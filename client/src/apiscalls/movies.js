@@ -65,3 +65,29 @@ export const GetMovieById=async(id)=>{
         };
     }
 }
+
+//rate a movie
+export const RateMovie=async(payload)=>{
+    try{
+        const response=await axiosInstance.post('/api/movies/rate-movie',payload);
+        return response.data;
+    }catch(error){
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message || "Failed to rate movie"
+        };
+    }
+}
+
+//get movie rating data
+export const GetMovieRating=async(id)=>{
+    try{
+        const response=await axiosInstance.get(`/api/movies/get-movie-rating/${id}`);
+        return response.data;
+    }catch(error){
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message || "Failed to get movie rating"
+        };
+    }
+}

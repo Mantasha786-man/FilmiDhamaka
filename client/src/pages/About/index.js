@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function About() {
   // const teamMembers = [
@@ -27,6 +28,8 @@ function About() {
   //     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face"
   //   }
   // ];
+
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -113,7 +116,10 @@ function About() {
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join thousands of movie lovers who trust us for their cinema experience
           </p>
-          <button className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-300">
+          <button
+            className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-300"
+            onClick={() => navigate('/movies')}
+          >
             Book Your Tickets Now
           </button>
         </div>
