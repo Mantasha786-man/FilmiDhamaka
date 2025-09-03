@@ -27,7 +27,7 @@ router.post('/add-movie',authMiddleware,async(req,res)=>{
 //get all movies
 router.get('/get-all-movies',authMiddleware,async(req,res)=>{
     try{
-        const movies=await Movie.find().sort({createAt:-1});
+        const movies=await Movie.find().sort({createdAt:-1});
         res.send({
             success:true,
             message:"movies fetched succesfully",

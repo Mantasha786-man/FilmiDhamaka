@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageTitle from '../../components/PageTitle'
 import { Tabs } from 'antd';
 import MoviesList from './MoviesList';
 import TheatresList from './TheatresList';
 import BookingsList from './BookingsList';
 import ContactMessagesList from './ContactMessagesList';
+import Dashboard from './Dashboard';
+
 function Admin() {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
+
   return (
     <div>
       <PageTitle title="Admin"/>
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane tab="Movies" key="1">
+      <Tabs activeKey={activeTab} onChange={handleTabChange}>
+        <Tabs.TabPane tab="Dashboard" key="dashboard">
+          <Dashboard onTabChange={handleTabChange} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Movies" key="movies">
             <MoviesList />
         </Tabs.TabPane>
-         <Tabs.TabPane tab="Theatres" key="2">
+         <Tabs.TabPane tab="Theatres" key="theatres">
            <TheatresList />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Bookings" key="3">
+        <Tabs.TabPane tab="Bookings" key="bookings">
           <BookingsList />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Contact Messages" key="4">
+        <Tabs.TabPane tab="Contact Messages" key="contacts">
           <ContactMessagesList />
         </Tabs.TabPane>
       </Tabs>

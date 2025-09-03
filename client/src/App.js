@@ -49,7 +49,7 @@ function AppContent() {
           <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie /></ProtectedRoute>} />
           <Route path='/book-show/:id' element={<ProtectedRoute><BookShow /></ProtectedRoute>} />
           <Route path='/my-bookings' element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
-          {user?.isAdmin && <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />}
+          <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           
           {/* Public Routes: Inhe access karne ke liye user logged out hona chahiye */}
           <Route path='/login' element={
