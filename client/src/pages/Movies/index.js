@@ -149,7 +149,7 @@ function Movies() {
               <Tooltip title="Click to book tickets for this movie" placement="top">
                 <Card
                   hoverable
-                  style={{ width: '100%', height: 320, display: 'flex', flexDirection: 'column' }}
+                  style={{ width: '100%', height: 340, display: 'flex', flexDirection: 'column' }}
                   cover={
                     <img
                       alt={movie.title}
@@ -171,8 +171,30 @@ function Movies() {
                     </div>
                   </div>
 
-                  <div style={{ marginTop: 8, fontSize: 12, color: '#444', flexGrow: 1, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
+                  <div style={{ marginTop: 8, fontSize: 12, color: '#444', flexGrow: 1, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                     {movie.description}
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: 8 }}>
+                    <button
+                      style={{
+                        padding: '8px 16px',
+                        backgroundColor: '#002E2A',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                        fontSize: '12px',
+                        width: '100%',
+                        maxWidth: '120px'
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/movie/${movie._id}`);
+                      }}
+                    >
+                      Book Now
+                    </button>
                   </div>
                 </Card>
               </Tooltip>

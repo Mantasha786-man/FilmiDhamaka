@@ -1,0 +1,16 @@
+/* TheatreForMovie component styles */
+
+.available-status {
+  color: #16a34a; /* Green color for available shows */
+  font-weight: 500;
+}
+
+.past-show-status {
+  color: #dc2626; /* Red color for past shows */
+  font-weight: 500;
+}
+
+.show-time-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}

@@ -30,10 +30,12 @@ const userRoutes = require('./routes/usersRoute');
 const movieRoutes = require('./routes/moviesRoute');
 const theatreRoute=require('./routes/theatreRoute');
 const bookingsRoute = require('./routes/bookingsRoute');
+const contactRoute = require('./routes/contactRoute');
 app.use('/api/users', userRoutes);
 app.use('/api/movies',movieRoutes);
 app.use('/api/theatres',theatreRoute);
  app.use('/api/bookings', bookingsRoute);
+app.use('/api/contacts', contactRoute);
 
 app.get('/', (req, res) => {
   res.json({

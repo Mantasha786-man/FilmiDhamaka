@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { message } from 'antd';
+import { submitContact } from '../../apiscalls/contact';
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [loading, setLoading] = useState(false);
+
   const contactInfo = [
     {
       icon: "📍",
@@ -23,6 +34,36 @@ function Contact() {
       details: "Mon-Fri: 9:00 AM - 10:00 PM\nSat-Sun: 10:00 AM - 11:00 PM"
     }
   ];
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await submitContact(formData);
+      if (response.success) {
+        message.success('Message sent successfully!');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      message.error('Failed to send message');
+    }
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -87,20 +128,28 @@ function Contact() {
             <div>
               <h2 className="text-3xl font-bold text-primary mb-8">Send us a Message</h2>
               <div className="bg-white p-8 rounded-lg shadow-lg">
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <input
                         type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
                         placeholder="First Name"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        required
                       />
                     </div>
                     <div>
                       <input
                         type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
                         placeholder="Last Name"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        required
                       />
                     </div>
                   </div>
@@ -108,14 +157,21 @@ function Contact() {
                   <div>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="Email Address"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      required
                     />
                   </div>
 
                   <div>
                     <input
                       type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
                       placeholder="Phone Number"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
@@ -124,16 +180,21 @@ function Contact() {
                   <div>
                     <textarea
                       rows="4"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="Your Message"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                      required
                     ></textarea>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-300"
+                    disabled={loading}
+                    className="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-300 disabled:opacity-50"
                   >
-                    Send Message
+                    {loading ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
               </div>

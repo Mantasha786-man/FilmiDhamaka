@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import BookingPopup from "../../components/BookingPopup";
 import { message, Tooltip } from "antd";
 import { useDispatch } from "react-redux";
-import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
+ import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { GetMovieById } from "../../apiscalls/movies";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetAllTheatreByMovie, GetAllShowsByMovie } from "../../apiscalls/theatres";
+
+import "./index.css";
 
 function TheatresForMovie() {
   //get date from query string
@@ -14,8 +16,6 @@ function TheatresForMovie() {
   const [date, setDate] = useState(tempDate || moment().format("YYYY-MM-DD"));
 
   const dispatch = useDispatch();
-
-
 
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
@@ -71,7 +71,6 @@ function TheatresForMovie() {
     setIsPopupVisible(true);
   }, []);
 
-
   const handleShowClick = (show) => {
     setSelectedShow(show);
     navigate(`/book-show/${show._id}`);
@@ -96,7 +95,7 @@ function TheatresForMovie() {
     handlePopupClose();
   };
 
-  const availableShowDates = theatres.flatMap(theatre => 
+  const availableShowDates = theatres.flatMap(theatre =>
     theatre.shows.map(show => {
       // Extract the actual show date from the show object
       return moment(show.date).format("MMMM Do YYYY");
@@ -133,7 +132,7 @@ function TheatresForMovie() {
         </div>
         <div>
           <Tooltip title="Select a date to see available show times" placement="top">
-            <h1 className="text-md">Select Date</h1>
+            <h1 className="text-md">Today Date</h1>
           </Tooltip>
           <input
             type="date"
@@ -165,6 +164,7 @@ function TheatresForMovie() {
               <h1 className="text-md uppercase">{theatre.name}</h1>
               <h1 className="text-sm">Address: {theatre.address}</h1>
               <div className="divider"></div>
+              <h1 className="text-sm font-semibold mb-2 show-time-title">Show Time</h1>
               <div className="flex gap-2">
                 {theatre.shows
                   .sort(
@@ -173,24 +173,28 @@ function TheatresForMovie() {
                   .map((show) => {
                     const isPastShow = moment(show.date).isBefore(moment(), 'day');
                     return (
-                      <Tooltip 
-                        title={isPastShow ? "This show has already passed" : "Click to book seats for this show"} 
+                      <Tooltip
+                        title={isPastShow ? "This show is not available" : "Click to book seats for this show"}
                         placement="top"
                       >
                         <div
-                          className={`card p-1 text-sm ${isPastShow ? 'bg-gray-200 cursor-not-allowed' : 'cursor-pointer'}`}
+                          className={`card p-1 text-sm ${isPastShow ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}`}
                           onClick={() => {
                             if (!isPastShow) {
                               handleShowClick(show);
                             } else {
-                              message.info("This show has already passed. Please select a current or future show.");
+                              message.info("This show is not available. Please select an available show.");
                             }
                           }}
                         >
-                          <h1 className={`text-xs ${isPastShow ? 'text-gray-500' : ''}`}>
-                            {moment(show.time, "HH:mm").format("hh:mm A")}
-                            {isPastShow && <span className="text-xs text-red-500 ml-1">(Past)</span>}
-                          </h1>
+                          <div className="flex items-center gap-1">
+                            <h1 className="text-xs font-semibold">
+                              {moment(show.time, "HH:mm").format("h:mm A")}
+                            </h1>
+                            <span className={`text-xs font-medium ${isPastShow ? 'past-show-status' : 'available-status'}`}>
+                              ({isPastShow ? 'Past Show' : 'Available'})
+                            </span>
+                          </div>
                         </div>
                       </Tooltip>
                     );

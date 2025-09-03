@@ -4,6 +4,7 @@ import { Tabs } from 'antd';
 import MoviesList from './MoviesList';
 import TheatresList from './TheatresList';
 import BookingsList from './BookingsList';
+import ContactMessagesList from './ContactMessagesList';
 function Admin() {
   return (
     <div>
@@ -17,6 +18,9 @@ function Admin() {
         </Tabs.TabPane>
         <Tabs.TabPane tab="Bookings" key="3">
           <BookingsList />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Contact Messages" key="4">
+          <ContactMessagesList />
         </Tabs.TabPane>
       </Tabs>
     </div>

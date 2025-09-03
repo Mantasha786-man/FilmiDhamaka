@@ -129,7 +129,7 @@ function MyBookings() {
                       
                       <div className="detail-item">
                         <i className="ri-time-line"></i>
-                        <span>Time: {booking.showTime}</span>
+                        <span>Time: {moment(booking.showTime, "HH:mm").format("hh:mm A")}</span>
                       </div>
                       
                       <div className="detail-item">

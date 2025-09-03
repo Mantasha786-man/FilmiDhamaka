@@ -6,7 +6,7 @@ import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { GetShowById } from "../../apiscalls/theatres";
 import moment from "moment";
 import Button from "../../components/button";
-import { CreateBooking } from "../../apiscalls/Bookings";
+import { CreateBooking, GetBookedSeats } from "../../apiscalls/Bookings";
 import { 
   MailOutlined, 
   CreditCardOutlined, 
@@ -77,12 +77,29 @@ function BookShow() {
   const getData = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await GetShowById({ showId: params.id });
-      if (response.success) {
-        setShow(response.data);
-      } else {
-        message.error(response.message);
+
+      // Fetch show details
+      const showResponse = await GetShowById({ showId: params.id });
+      if (!showResponse.success) {
+        message.error(showResponse.message);
+        dispatch(HideLoading());
+        return;
       }
+
+      // Fetch booked seats for this show
+      const bookedSeatsResponse = await GetBookedSeats(params.id);
+      if (bookedSeatsResponse.success) {
+        // Update show data with latest booked seats
+        const updatedShow = {
+          ...showResponse.data,
+          bookedSeats: bookedSeatsResponse.data.bookedSeats || []
+        };
+        setShow(updatedShow);
+      } else {
+        // If booked seats fetch fails, use show data as is
+        setShow(showResponse.data);
+      }
+
       dispatch(HideLoading());
     } catch (error) {
       dispatch(HideLoading());
@@ -188,7 +205,7 @@ function BookShow() {
           
           <div><strong>Date & Time:</strong></div>
           <div>
-            {show?.date ? moment(show.date).format("MMM Do YYYY") : "N/A"} at {show?.time || "N/A"}
+            {show?.date ? moment(show.date).format("MMM Do YYYY") : "N/A"} at {show?.time ? moment(show.time, "HH:mm").format("hh:mm A") : "N/A"}
           </div>
           
           <div><strong>Selected Seats:</strong></div>

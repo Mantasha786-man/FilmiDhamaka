@@ -81,3 +81,29 @@ export const GetBooking = async (bookingId) => {
     }
 }
 
+// Get booked seats for a specific show
+export const GetBookedSeats = async (showId) => {
+    try {
+        const response = await axiosInstance.get(`/api/bookings/booked-seats/${showId}`);
+        return response.data;
+    } catch (error) {
+        return error.response?.data || {
+            success: false,
+            message: "Failed to get booked seats"
+        };
+    }
+}
+
+// Cancel booking
+export const CancelBooking = async (bookingId) => {
+    try {
+        const response = await axiosInstance.post(`/api/bookings/cancel-booking/${bookingId}`);
+        return response.data;
+    } catch (error) {
+        return error.response?.data || {
+            success: false,
+            message: "Failed to cancel booking"
+        };
+    }
+}
+

@@ -1,4 +1,4 @@
-import { Col, Form, message, Modal, Row, Table } from "antd";
+import { Col, Form, message, Modal, Row, Table, TimePicker } from "antd";
 import Button from "../../../components/button";
 import React, { useEffect } from "react";
 import { GetAllMovies } from "../../../apiscalls/movies";
@@ -39,10 +39,13 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
   const handleAddShow = async(values)=>{
     try{
       dispatch(ShowLoading());
-      const response=await AddShow({
+      // Format time to HH:mm if it's a moment object
+      const formattedValues = {
         ...values,
-      theatre: theatre._id
-      });
+        time: values.time ? moment(values.time).format("HH:mm") : values.time,
+        theatre: theatre._id
+      };
+      const response=await AddShow(formattedValues);
       if(response.success){
         message.success(response.message);
         getData();
@@ -89,6 +92,9 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
     {
       title: "Time",
       dataIndex: "time",
+      render: (text, record) => {
+        return moment(text, "HH:mm").format("hh:mm A");
+      }
     },
     {
       title: "Movie",
@@ -185,7 +191,7 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
             <Col span={8}>
               <Form.Item label="Time" name="time"
                 rules={[{required:true,message:"please input show time.!"}]}>
-                <input type="time" />
+                <TimePicker format="hh:mm A" use12Hours />
               </Form.Item>
             </Col>
 

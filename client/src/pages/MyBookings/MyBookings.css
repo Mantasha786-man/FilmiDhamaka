@@ -54,7 +54,7 @@
 .movie-title {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: black !important;
   flex: 1;
   margin-right: 8px;
 }

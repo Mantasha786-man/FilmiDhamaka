@@ -67,7 +67,7 @@ function BookingsList() {
       key: 'showInfo',
       render: (record) => (
         <span>
-          {moment(record.showDate).format('MMM Do YYYY')} at {record.showTime}
+          {moment(record.showDate).format('MMM Do YYYY')} at {moment(record.showTime, "HH:mm").format("hh:mm A")}
         </span>
       ),
     },

@@ -7,6 +7,33 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.post('/create-booking', async (req, res) => {
     try {
         const bookingData = req.body;
+
+        // Import Show model for seat validation
+        const Show = require('../models/showModel');
+
+        // Check if the show exists
+        const show = await Show.findById(bookingData.showId);
+        if (!show) {
+            return res.status(404).json({ success: false, message: 'Show not found' });
+        }
+
+        // Check if any of the requested seats are already booked
+        const conflictingSeats = bookingData.seats.filter(seat =>
+            show.bookedSeats.includes(seat.toString())
+        );
+
+        if (conflictingSeats.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: `Seats ${conflictingSeats.join(', ')} are already booked. Please select different seats.`
+            });
+        }
+
+        // Temporarily reserve seats by adding them to bookedSeats
+        // This prevents race conditions during concurrent bookings
+        const updatedBookedSeats = [...show.bookedSeats, ...bookingData.seats.map(seat => seat.toString())];
+        await Show.findByIdAndUpdate(bookingData.showId, { bookedSeats: updatedBookedSeats });
+
         const newBooking = new Booking(bookingData);
         await newBooking.save();
 
@@ -34,6 +61,61 @@ router.get('/user-bookings', authMiddleware, async (req, res) => {
         res.status(200).json({ success: true, data: bookings });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Failed to get bookings', error: error.message });
+    }
+});
+
+// Get booked seats for a specific show
+router.get('/booked-seats/:showId', async (req, res) => {
+    try {
+        const Show = require('../models/showModel');
+        const show = await Show.findById(req.params.showId);
+
+        if (!show) {
+            return res.status(404).json({ success: false, message: 'Show not found' });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: {
+                bookedSeats: show.bookedSeats || [],
+                totalSeats: show.totalSeats
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to get booked seats', error: error.message });
+    }
+});
+
+// Cancel booking and release seats
+router.post('/cancel-booking/:bookingId', async (req, res) => {
+    try {
+        const booking = await Booking.findById(req.params.bookingId);
+        if (!booking) {
+            return res.status(404).json({ success: false, message: 'Booking not found' });
+        }
+
+        // Only allow cancellation of pending bookings
+        if (booking.status !== 'pending') {
+            return res.status(400).json({ success: false, message: 'Only pending bookings can be cancelled' });
+        }
+
+        const Show = require('../models/showModel');
+        const show = await Show.findById(booking.showId);
+
+        if (show) {
+            // Remove the seats from bookedSeats array
+            const updatedBookedSeats = show.bookedSeats.filter(seat =>
+                !booking.seats.includes(seat.toString())
+            );
+            await Show.findByIdAndUpdate(booking.showId, { bookedSeats: updatedBookedSeats });
+        }
+
+        booking.status = 'cancelled';
+        await booking.save();
+
+        res.status(200).json({ success: true, message: 'Booking cancelled successfully', data: booking });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to cancel booking', error: error.message });
     }
 });
 
