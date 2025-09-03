@@ -1,7 +1,6 @@
 const router=require('express').Router();
 const Movie=require("../models/moiveModel");
 const authMiddleware=require('../middlewares/authMiddleware');
-const { message } = require('antd');
 
 //add a new movie
 router.post('/add-movie',authMiddleware,async(req,res)=>{
