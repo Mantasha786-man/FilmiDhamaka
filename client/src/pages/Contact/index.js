@@ -211,10 +211,13 @@ function Contact() {
             Our customer support team is available 24/7 to help you
           </p>
           <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-            <button className="bg-secoundary text-white px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-300">
-              Call Now: +91 98765 43210
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors duration-300">
+            <a
+              href="tel:+917490961265"
+              className="bg-secoundary text-black px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors duration-300 inline-block text-center"
+            >
+              Call Now: +91 74909 61265
+            </a>
+            <button className="border-2 border-white text-black px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors duration-300">
               Live Chat
             </button>
           </div>
