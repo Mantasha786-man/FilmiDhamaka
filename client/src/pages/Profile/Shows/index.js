@@ -4,13 +4,15 @@ import React, { useEffect } from "react";
 import { GetAllMovies } from "../../../apiscalls/movies";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../../redux/loadersSlice";
-import { AddShow, DeleteShow, GetAllShowsByTheatre } from "../../../apiscalls/theatres";
+import { AddShow, UpdateShow, DeleteShow, GetAllShowsByTheatre } from "../../../apiscalls/theatres";
 import moment from 'moment';
 
 function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
   const [view, setView] = React.useState("table");
   const [shows, setShows] = React.useState([]);
   const [movies, setMovies] = React.useState([]);
+  const [selectedShow, setSelectedShow] = React.useState(null);
+  const [formType, setFormType] = React.useState("add");
   const dispatch = useDispatch();
   const getData = async () => {
     try {
@@ -36,22 +38,36 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
     }
   };
 
-  const handleAddShow = async(values)=>{
+  const handleSubmit = async(values)=>{
     try{
       dispatch(ShowLoading());
-      // Format time to HH:mm if it's a moment object
+      // Format time to HH:mm, handling dayjs object from TimePicker
       const formattedValues = {
         ...values,
-        time: values.time ? moment(values.time).format("HH:mm") : values.time,
+        time: values.time ? moment(values.time.toDate()).format("HH:mm") : values.time,
         theatre: theatre._id
       };
-      const response=await AddShow(formattedValues);
-      if(response.success){
-        message.success(response.message);
-        getData();
-        setView("table");
-      }else{
-        message.error(response.message)
+      if(formType === "edit") {
+        formattedValues.showId = selectedShow._id;
+        const response=await UpdateShow(formattedValues);
+        if(response.success){
+          message.success(response.message);
+          getData();
+          setView("table");
+          setFormType("add");
+          setSelectedShow(null);
+        }else{
+          message.error(response.message)
+        }
+      } else {
+        const response=await AddShow(formattedValues);
+        if(response.success){
+          message.success(response.message);
+          getData();
+          setView("table");
+        }else{
+          message.error(response.message)
+        }
       }
       dispatch(HideLoading());
     }catch(error){
@@ -75,6 +91,12 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
       message.error(error.message);
       dispatch(HideLoading());
     }
+  }
+
+  const handleEdit = (show) => {
+    setSelectedShow(show);
+    setFormType("edit");
+    setView("form");
   }
 
   const columns = [
@@ -124,8 +146,14 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
          render: (text, record) => {
         return (
           <div className="flex gap-1 items-center">
+            <i
+              className="ri-pencil-line"
+              onClick={() => {
+                handleEdit(record);
+              }}
+            ></i>
            {record.bookedSeats.length === 0 && (
-             <i 
+             <i
               className="ri-delete-bin-line"
               onClick={() => {
                 handleDelete(record._id);
@@ -157,7 +185,7 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
 
       <div className="flex justify-between mt-1 mb-1 items-center">
         <h1 className="text-md uppercase">
-          {view === "table" ? "Shows" : "Add Show"}
+          {view === "table" ? "Shows" : formType === "edit" ? "Edit Show" : "Add Show"}
         </h1>
         {view === "table" &&   <Button
           title="Add Show"
@@ -171,7 +199,15 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
       {view === "table" && <Table columns={columns} dataSource={shows} />}
       {view === "form" && (
         <Form layout="vartical"
-        onFinish={handleAddShow}
+        onFinish={handleSubmit}
+        initialValues={formType === "edit" ? {
+          name: selectedShow.name,
+          date: moment(selectedShow.date).format("YYYY-MM-DD"),
+          time: moment(selectedShow.time, "HH:mm"),
+          movie: selectedShow.movie._id,
+          ticketPrice: selectedShow.ticketPrice,
+          totalSeats: selectedShow.totalSeats
+        } : {}}
         >
           <Row gutter={[16,16]}>
             <Col span={8}>

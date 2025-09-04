@@ -50,6 +50,16 @@ export const AddShow= async (payload) => {
     }
 };
 
+//update show
+export const UpdateShow = async (payload) => {
+    try{
+        const response = await axiosInstance.put('/api/theatres/update-show', payload);
+        return response.data;
+    }catch(error){
+        return error.response;
+    }
+};
+
 //get all shows by theatre
 export const GetAllShowsByTheatre = async (payload) => {
     try{

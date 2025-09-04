@@ -110,6 +110,27 @@ router.post("/get-all-shows-by-theatre",authMiddleware,async(req,res)=>{
   }
 });
 
+//update show
+router.put("/update-show",authMiddleware,async(req,res)=>{
+  try{
+    const updatedShow = await Show.findByIdAndUpdate(
+      req.body.showId,
+      req.body,
+      { new: true }
+    );
+    res.send({
+      success:true,
+      message:"show updated successfully",
+      data: updatedShow,
+    });
+  }catch(error){
+    res.send({
+      success:false,
+      message:error.message,
+    });
+  }
+});
+
 //delete Show
 router.post("/delete-show",authMiddleware,async(req,res)=>{
   try{
