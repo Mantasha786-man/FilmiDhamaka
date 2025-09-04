@@ -6,7 +6,9 @@ import { useDispatch } from 'react-redux';
 import { GetUserBookings } from '../../apiscalls/Bookings';
 import { GetAllMovies } from '../../apiscalls/movies';
 import moment from 'moment';
+import jsPDF from 'jspdf';
 import './MyBookings.css';
+
 
 const { Meta } = Card;
 
@@ -58,6 +60,31 @@ function MyBookings() {
       case 'cancelled': return 'red';
       default: return 'blue';
     }
+  };
+
+  const generateTicketPDF = (booking) => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Movie Ticket', 105, 15, null, null, 'center');
+
+    doc.setFontSize(12);
+    doc.text(`Movie: ${booking.movieName}`, 20, 30);
+    doc.text(`Theater: ${booking.theaterName}`, 20, 40);
+    doc.text(`Date: ${moment(booking.showDate).format('MMM Do YYYY')}`, 20, 50);
+    doc.text(`Time: ${moment(booking.showTime, "HH:mm").format("hh:mm A")}`, 20, 60);
+    doc.text(`Seats: ${booking.seats.join(', ')}`, 20, 70);
+    doc.text(`Amount: ₹${booking.totalAmount}`, 20, 80);
+    doc.text(`Booked on: ${moment(booking.bookingDate).format('MMM Do YYYY, h:mm A')}`, 20, 90);
+    doc.text(`Status: ${booking.status.toUpperCase()}`, 20, 100);
+
+    doc.setLineWidth(0.5);
+    doc.line(20, 105, 190, 105);
+
+    doc.setFontSize(10);
+    doc.text('Thank you for booking with us!', 105, 115, null, null, 'center');
+
+    doc.save(`Ticket_${booking._id}.pdf`);
   };
 
   if (loading) {
@@ -118,34 +145,52 @@ function MyBookings() {
                   description={
                     <div className="booking-details">
                       <div className="detail-item">
-                        <i className="ri-building-line"></i>
+                        <i className="ri-building-line" style={{ color: '#002E2A' }}></i>
                         <span>Theater: {booking.theaterName}</span>
                       </div>
-                      
+
                       <div className="detail-item">
-                        <i className="ri-calendar-event-line"></i>
+                        <i className="ri-calendar-event-line" style={{ color: '#002E2A' }}></i>
                         <span>Date: {moment(booking.showDate).format('MMM Do YYYY')}</span>
                       </div>
-                      
+
                       <div className="detail-item">
-                        <i className="ri-time-line"></i>
+                        <i className="ri-time-line" style={{ color: '#002E2A' }}></i>
                         <span>Time: {moment(booking.showTime, "HH:mm").format("hh:mm A")}</span>
                       </div>
-                      
+
                       <div className="detail-item">
-                        <i className="ri-chair-line"></i>
+                        <i className="ri-chair-line" style={{ color: '#002E2A' }}></i>
                         <span>Seats: {booking.seats.join(', ')}</span>
                       </div>
-                      
+
                       <div className="detail-item">
-                        <i className="ri-money-rupee-circle-line"></i>
+                        <i className="ri-money-rupee-circle-line" style={{ color: '#002E2A' }}></i>
                         <span className="amount">Amount: ₹{booking.totalAmount}</span>
                       </div>
-                      
+
                       <div className="detail-item">
-                        <i className="ri-calendar-check-line"></i>
+                        <i className="ri-calendar-check-line" style={{ color: '#002E2A' }}></i>
                         <span>Booked on: {moment(booking.bookingDate).format('MMM Do YYYY, h:mm A')}</span>
                       </div>
+                      <button
+                        style={{
+                          marginTop: '10px',
+                          display: 'block',
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          backgroundColor: '#002E2A',
+                          border: '1px solid #002E2A',
+                          color: '#fff',
+                          padding: '8px 16px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          fontSize: '14px'
+                        }}
+                        onClick={() => generateTicketPDF(booking)}
+                      >
+                        Download Ticket
+                      </button>
                     </div>
                   }
                 />

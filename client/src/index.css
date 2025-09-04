@@ -46,7 +46,7 @@ body {
 
 /* Ensure Ant Design loader colors */
 .ant-spin-dot-item {
-  background-color: #1890ff !important;
+  background-color: #002E2A !important;
 }
 
 /* Ensure button colors are not affected */
@@ -62,5 +62,10 @@ body {
 
 /* Ensure loading spinner has proper color */
 .ant-spin .ant-spin-dot i {
-  background-color: #1890ff !important;
+  background-color: #002E2A !important;
+}
+
+/* Make loading spinner bigger */
+.ant-spin {
+  font-size: 24px;
 }
