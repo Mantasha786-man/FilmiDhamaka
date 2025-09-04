@@ -315,6 +315,9 @@ function BookShow() {
                 ? moment(show.date).format("MMMM Do YYYY")
                 : "Date not available"}
             </h1>
+            <h1 className="text-sm font-semibold">
+              {show.name || "Show Name"}
+            </h1>
             <h1 className="text-sm text-gray-600">
               {show.time
                 ? moment(show.time, "HH:mm").format("hh:mm A")
