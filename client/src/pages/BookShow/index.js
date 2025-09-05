@@ -1,5 +1,5 @@
 import { message, Modal, Form, Input, Button as AntButton } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
@@ -7,12 +7,12 @@ import { GetShowById } from "../../apiscalls/theatres";
 import moment from "moment";
 import Button from "../../components/button";
 import { CreateBooking, GetBookedSeats } from "../../apiscalls/Bookings";
-import { 
-  MailOutlined, 
-  CreditCardOutlined, 
-  CalendarOutlined, 
+import {
+  MailOutlined,
+  CreditCardOutlined,
+  CalendarOutlined,
   SafetyCertificateOutlined,
-  CheckCircleOutlined 
+  CheckCircleOutlined
 } from "@ant-design/icons";
 
 function BookShow() {
@@ -30,6 +30,7 @@ function BookShow() {
       return;
     }
     setPaymentModalVisible(true);
+    
   };
 
   const [successModalVisible, setSuccessModalVisible] = useState(false);
@@ -74,7 +75,7 @@ function BookShow() {
     }
   };
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       dispatch(ShowLoading());
 
@@ -105,11 +106,11 @@ function BookShow() {
       dispatch(HideLoading());
       message.error(error.message);
     }
-  };
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   const handlePaymentModalOk = () => {
     form.validateFields()

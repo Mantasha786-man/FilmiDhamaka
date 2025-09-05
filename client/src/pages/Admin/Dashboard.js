@@ -66,7 +66,7 @@ function Dashboard({ onTabChange }) {
 
   useEffect(() => {
     fetchStats();
-  }, []);
+  }, [fetchStats]);
 
 
 

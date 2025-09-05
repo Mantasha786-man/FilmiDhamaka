@@ -112,7 +112,7 @@ function MoviesList() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   return (
     <div>
