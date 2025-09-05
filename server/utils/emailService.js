@@ -46,7 +46,7 @@ const sendBookingConfirmationEmail = async (userEmail, bookingDetails) => {
     return { success: false, message: 'Failed to send email', error: error.message };
   }
 };
-
+// exportting the function
 module.exports = {
   sendBookingConfirmationEmail
 };
