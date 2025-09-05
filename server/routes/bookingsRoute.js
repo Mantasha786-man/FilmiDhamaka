@@ -130,6 +130,15 @@ router.post('/confirm-booking/:bookingId', async (req, res) => {
         booking.status = 'confirmed';
         await booking.save();
 
+        // Send confirmation email to the user
+        const { sendBookingConfirmationEmail } = require('../utils/emailService');
+        const emailResult = await sendBookingConfirmationEmail(booking.userEmail, booking);
+
+        if (!emailResult.success) {
+            console.error('Failed to send confirmation email:', emailResult.message);
+            // Note: We don't fail the booking confirmation if email fails, but log it
+        }
+
         res.status(200).json({ success: true, message: 'Booking confirmed', data: booking });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Failed to confirm booking', error: error.message });
