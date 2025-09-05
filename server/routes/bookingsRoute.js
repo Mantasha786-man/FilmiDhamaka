@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const Booking = require('../models/bookingModel');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
@@ -122,9 +123,19 @@ router.post('/cancel-booking/:bookingId', async (req, res) => {
 // Confirm booking
 router.post('/confirm-booking/:bookingId', async (req, res) => {
     try {
+        // Validate bookingId
+        if (!req.params.bookingId || !mongoose.Types.ObjectId.isValid(req.params.bookingId)) {
+            return res.status(400).json({ success: false, message: 'Invalid booking ID' });
+        }
+
         const booking = await Booking.findById(req.params.bookingId);
         if (!booking) {
             return res.status(404).json({ success: false, message: 'Booking not found' });
+        }
+
+        // Check if already confirmed
+        if (booking.status === 'confirmed') {
+            return res.status(400).json({ success: false, message: 'Booking is already confirmed' });
         }
 
         booking.status = 'confirmed';
@@ -139,8 +150,9 @@ router.post('/confirm-booking/:bookingId', async (req, res) => {
             // Note: We don't fail the booking confirmation if email fails, but log it
         }
 
-        res.status(200).json({ success: true, message: 'Booking confirmed', data: booking });
+        res.status(200).json({ success: true, message: 'Booking confirmed successfully', data: booking });
     } catch (error) {
+        console.error('Error confirming booking:', error);
         res.status(500).json({ success: false, message: 'Failed to confirm booking', error: error.message });
     }
 });
