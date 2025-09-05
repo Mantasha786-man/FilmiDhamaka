@@ -26,12 +26,8 @@ import { useSelector } from 'react-redux';
 
 function AppContent() {
   const location = useLocation();
-  const [refreshCount, setRefreshCount] = useState(0);
-  const { user } = useSelector((state) => state.users);
 
-  useEffect(() => {
-      setRefreshCount(prevCount => prevCount + 1);
-  }, []);
+  // Removed unused state and selector
 
   // Check if current route is login or register
   const shouldShowFooter = location.pathname !== '/login' && location.pathname !== '/register';
