@@ -353,4 +353,10 @@ body {
   .ant-card-body > div:first-child .ant-rate-star {
     font-size: 12px !important;
   }
+
+  /* Stack show times vertically in theatre cards for phone view */
+  .card .flex.gap-2 {
+    flex-direction: column !important;
+    gap: 0.5rem !important; /* Adjust gap for vertical stacking */
+  }
 }
