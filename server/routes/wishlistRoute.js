@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Wishlist = require('../models/wishlistModel');
+const User = require('../models/userModel');
+const Movie = require('../models/moiveModel');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Add movie to wishlist
@@ -10,7 +12,10 @@ router.post('/add', authMiddleware, async (req, res) => {
     const userId = req.userId;
 
     // Check if already in wishlist
-    const existingWishlistItem = await Wishlist.findOne({ userId, movieId });
+    const existingWishlistItem = await Wishlist.findOne({
+      'userDetails.userId': userId,
+      'movieDetails.movieId': movieId
+    });
     if (existingWishlistItem) {
       return res.status(400).json({
         success: false,
@@ -18,9 +23,40 @@ router.post('/add', authMiddleware, async (req, res) => {
       });
     }
 
+    // Fetch user details
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Fetch movie details
+    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      return res.status(404).json({
+        success: false,
+        message: 'Movie not found'
+      });
+    }
+
     const wishlistItem = new Wishlist({
-      userId,
-      movieId
+      userDetails: {
+        userId: user._id,
+        name: user.name,
+        email: user.email
+      },
+      movieDetails: {
+        movieId: movie._id,
+        title: movie.title,
+        description: movie.description,
+        duration: movie.duration,
+        genre: movie.genre,
+        language: movie.language,
+        releaseDate: movie.releaseDate,
+        poster: movie.poster
+      }
     });
 
     await wishlistItem.save();
@@ -46,7 +82,10 @@ router.post('/remove', authMiddleware, async (req, res) => {
     const { movieId } = req.body;
     const userId = req.userId;
 
-    const wishlistItem = await Wishlist.findOneAndDelete({ userId, movieId });
+    const wishlistItem = await Wishlist.findOneAndDelete({
+      'userDetails.userId': userId,
+      'movieDetails.movieId': movieId
+    });
 
     if (!wishlistItem) {
       return res.status(404).json({
@@ -74,8 +113,7 @@ router.get('/user', authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
 
-    const wishlist = await Wishlist.find({ userId })
-      .populate('movieId')
+    const wishlist = await Wishlist.find({ 'userDetails.userId': userId })
       .sort({ addedAt: -1 });
 
     res.json({
@@ -98,7 +136,10 @@ router.get('/check/:movieId', authMiddleware, async (req, res) => {
     const { movieId } = req.params;
     const userId = req.userId;
 
-    const wishlistItem = await Wishlist.findOne({ userId, movieId });
+    const wishlistItem = await Wishlist.findOne({
+      'userDetails.userId': userId,
+      'movieDetails.movieId': movieId
+    });
 
     res.json({
       success: true,

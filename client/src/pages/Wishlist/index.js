@@ -95,29 +95,29 @@ function Wishlist() {
                 cover={
                   <div style={{ position: 'relative' }}>
                     <img
-                      alt={item.movieId?.title}
-                      src={item.movieId?.poster}
+                      alt={item.movieDetails?.title}
+                      src={item.movieDetails?.poster}
                       style={{ height: 180, objectFit: 'cover', width: '100%' }}
                     />
-                    <WishlistIcon movieId={item.movieId?._id} />
+                    <WishlistIcon movieId={item.movieDetails?.movieId} />
                   </div>
                 }
-                onClick={() => handleMovieClick(item.movieId?._id)}
+                onClick={() => handleMovieClick(item.movieDetails?.movieId)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: 0, fontSize: 14 }}>{item.movieId?.title}</h3>
-                    <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{item.movieId?.genre}</p>
-                    <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>{item.movieId?.language}</p>
+                    <h3 style={{ margin: 0, fontSize: 14 }}>{item.movieDetails?.title}</h3>
+                    <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{item.movieDetails?.genre}</p>
+                    <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>{item.movieDetails?.language}</p>
                   </div>
                   <div style={{ flex: 1, textAlign: 'right' }}>
-                    <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{moment(item.movieId?.releaseDate).format("MMM Do YYYY")}</p>
-                    <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>Duration: {item.movieId?.duration || 'N/A'}</p>
+                    <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{moment(item.movieDetails?.releaseDate).format("MMM Do YYYY")}</p>
+                    <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>Duration: {item.movieDetails?.duration || 'N/A'}</p>
                   </div>
                 </div>
 
                 <div style={{ marginTop: 8, fontSize: 12, color: '#444', flexGrow: 1, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-                  {item.movieId?.description}
+                  {item.movieDetails?.description}
                 </div>
 
                 <div style={{
@@ -146,7 +146,7 @@ function Wishlist() {
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleMovieClick(item.movieId?._id);
+                      handleMovieClick(item.movieDetails?.movieId);
                     }}
                   >
                     Book Now

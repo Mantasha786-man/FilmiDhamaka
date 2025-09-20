@@ -16,6 +16,10 @@ const Navigation = () => {
         <Link to="/movies">Movies</Link>
       </Menu.Item>
 
+      <Menu.Item key="wishlist">
+        <Link to="/wishlist">Wishlist</Link>
+      </Menu.Item>
+
       <Menu.Item key="about">
         <Link to="/about">About</Link>
       </Menu.Item>
