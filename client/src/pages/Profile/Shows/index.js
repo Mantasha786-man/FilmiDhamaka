@@ -14,12 +14,15 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
   const [selectedShow, setSelectedShow] = React.useState(null);
   const [formType, setFormType] = React.useState("add");
   const dispatch = useDispatch();
+
   const getData = async () => {
     try {
       dispatch(ShowLoading());
       const moviesResponse = await GetAllMovies();
       if (moviesResponse.success) {
-        setMovies(moviesResponse.data);
+        // Filter out null/undefined movies
+        const validMovies = (moviesResponse.data || []).filter(movie => movie && movie._id);
+        setMovies(validMovies);
       } else {
         message.error(moviesResponse.message);
       }
@@ -122,7 +125,8 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
       title: "Movie",
       dataIndex: "movie",
       render:(text,record)=>{
-        return record.movie.title;
+        // Add null checking for movie and movie.title
+        return record?.movie?.title || "N/A";
       }
     },
     {
@@ -152,14 +156,12 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
                 handleEdit(record);
               }}
             ></i>
-           {record.bookedSeats.length === 0 && (
-             <i
-              className="ri-delete-bin-line"
-              onClick={() => {
-                handleDelete(record._id);
-              }}
-            ></i>
-           )}
+           <i
+            className="ri-delete-bin-line"
+            onClick={() => {
+              handleDelete(record._id);
+            }}
+           ></i>
           </div>
         );
       },
@@ -235,8 +237,8 @@ function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
               <Form.Item label="Movie" name="movie"   rules={[{required:true,message:"please input movie.!"}]}>
                 <select>
                   <option value="">Select Movie</option>
-                  {movies.map((movie)=>(
-                    <option value={movie._id}>{movie.title}</option>
+                  {movies.filter(movie => movie && movie._id).map((movie)=>(
+                    <option key={movie._id} value={movie._id}>{movie?.title || "N/A"}</option>
                   ))}
                 </select>
               </Form.Item>

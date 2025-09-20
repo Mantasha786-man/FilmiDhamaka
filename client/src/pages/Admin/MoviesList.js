@@ -19,14 +19,18 @@ function MoviesList() {
       dispatch(ShowLoading());
       const response = await GetAllMovies();
       if (response && response.success) {
-        setMovies(response.data || []);
+        // Filter out null/undefined movies and ensure data integrity
+        const validMovies = (response.data || []).filter(movie => movie && movie._id);
+        setMovies(validMovies);
       } else {
         message.error(response?.message || "Failed to fetch movies");
+        setMovies([]); // Ensure movies is always an array
       }
       dispatch(HideLoading());
     } catch (error) {
       dispatch(HideLoading());
       message.error(error?.message || "An error occurred while fetching movies");
+      setMovies([]); // Ensure movies is always an array
     }
   }, [dispatch]);
 
@@ -53,44 +57,80 @@ function MoviesList() {
     {
       title: "Name",
       dataIndex: "title",
+      render: (text, record) => {
+        // Add null checking for the title field
+        return record?.title || "N/A";
+      },
     },
     {
       title: "Poster",
       dataIndex: "poster",
       render: (text, record) => {
+        // Add null checking for poster and record
+        if (!record?.poster) {
+          return <div className="w-[60px] h-[60px] bg-gray-200 flex items-center justify-center text-xs">No Image</div>;
+        }
         return <img src={record.poster} alt="poster" width={60} height={60} className="br-1" />;
       },
     },
     {
       title: "Description",
       dataIndex: "description",
+      render: (text, record) => {
+        // Add null checking for description
+        return record?.description || "N/A";
+      },
     },
     {
       title: "Duration",
       dataIndex: "duration",
+      render: (text, record) => {
+        // Add null checking for duration
+        return record?.duration || "N/A";
+      },
     },
     {
       title: "Genre",
       dataIndex: "genre",
+      render: (text, record) => {
+        // Add null checking for genre
+        return record?.genre || "N/A";
+      },
     },
     {
       title: "Language",
       dataIndex: "language",
+      render: (text, record) => {
+        // Add null checking for language
+        return record?.language || "N/A";
+      },
     },
     {
       title: "Release Date",
       dataIndex: "releaseDate",
       render: (text, record) => {
-        return moment(record.releaseDate).format("DD-MM-YYYY");
+        // Add null checking for release date
+        if (!record?.releaseDate) {
+          return "N/A";
+        }
+        try {
+          return moment(record.releaseDate).format("DD-MM-YYYY");
+        } catch (error) {
+          return "Invalid Date";
+        }
       },
     },
     {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => {
+        // Add null checking for record and _id
+        if (!record?._id) {
+          return null;
+        }
         return (
           <div className="flex gap-1">
-            <i 
+            <i
               className="ri-delete-bin-line"
               onClick={() => {
                 handleDelete(record._id);

@@ -23,7 +23,6 @@ function Movies() {
       dispatch(ShowLoading());
       const response = await GetAllMovies();
       if (response && response.success) {
-
         setMovies(response.data || []);
       } else {
         message.error(response?.message || "Failed to fetch movies");
