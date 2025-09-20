@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { message, Row, Col, Card, Tooltip, Input } from 'antd';
+import WishlistIcon from '../../components/WishlistIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { HideLoading, ShowLoading } from '../../redux/loadersSlice';
 import { GetAllMovies } from '../../apiscalls/movies';
@@ -150,11 +151,14 @@ function Movies() {
                   hoverable
                   style={{ width: '100%', height: 340, display: 'flex', flexDirection: 'column' }}
                   cover={
-                    <img
-                      alt={movie.title}
-                      src={movie.poster}
-                      style={{ height: 180, objectFit: 'cover' }}
-                    />
+                    <div style={{ position: 'relative' }}>
+                      <img
+                        alt={movie.title}
+                        src={movie.poster}
+                        style={{ height: 180, objectFit: 'cover', width: '100%' }}
+                      />
+                      <WishlistIcon movieId={movie._id} />
+                    </div>
                   }
                   onClick={() => navigate(`/movie/${movie._id}`)}
                 >

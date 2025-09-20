@@ -7,7 +7,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.post('/add', authMiddleware, async (req, res) => {
   try {
     const { movieId } = req.body;
-    const userId = req.user.id;
+    const userId = req.userId;
 
     // Check if already in wishlist
     const existingWishlistItem = await Wishlist.findOne({ userId, movieId });
@@ -44,7 +44,7 @@ router.post('/add', authMiddleware, async (req, res) => {
 router.post('/remove', authMiddleware, async (req, res) => {
   try {
     const { movieId } = req.body;
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const wishlistItem = await Wishlist.findOneAndDelete({ userId, movieId });
 
@@ -72,7 +72,7 @@ router.post('/remove', authMiddleware, async (req, res) => {
 // Get user's wishlist
 router.get('/user', authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const wishlist = await Wishlist.find({ userId })
       .populate('movieId')
@@ -96,7 +96,7 @@ router.get('/user', authMiddleware, async (req, res) => {
 router.get('/check/:movieId', authMiddleware, async (req, res) => {
   try {
     const { movieId } = req.params;
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const wishlistItem = await Wishlist.findOne({ userId, movieId });
 

@@ -99,8 +99,7 @@ function Wishlist() {
                       src={item.movieId?.poster}
                       style={{ height: 180, objectFit: 'cover', width: '100%' }}
                     />
-                    {/* Wishlist Icon - already in wishlist */}
-                    <WishlistIcon movieId={item.movieId?._id} size={24} />
+                    <WishlistIcon movieId={item.movieId?._id} />
                   </div>
                 }
                 onClick={() => handleMovieClick(item.movieId?._id)}
@@ -112,26 +111,12 @@ function Wishlist() {
                     <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>{item.movieId?.language}</p>
                   </div>
                   <div style={{ flex: 1, textAlign: 'right' }}>
-                    <p style={{ margin: 0, fontSize: 12, color: '#666' }}>
-                      {moment(item.movieId?.releaseDate).format("MMM Do YYYY")}
-                    </p>
-                    <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>
-                      Duration: {item.movieId?.duration || 'N/A'}
-                    </p>
+                    <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{moment(item.movieId?.releaseDate).format("MMM Do YYYY")}</p>
+                    <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>Duration: {item.movieId?.duration || 'N/A'}</p>
                   </div>
                 </div>
 
-                <div style={{
-                  marginTop: 8,
-                  fontSize: 12,
-                  color: '#444',
-                  flexGrow: 1,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical'
-                }}>
+                <div style={{ marginTop: 8, fontSize: 12, color: '#444', flexGrow: 1, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                   {item.movieId?.description}
                 </div>
 
