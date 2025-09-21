@@ -19,7 +19,7 @@ import Movies from './pages/Movies';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Review from './pages/Review';
-import Wishlist from './pages/Wishlist';
+
 // Main App component - saari routing aur navigation handle karta hai
 // This is the root component that handles routing and navigation for the entire Movie Booking System
 import React, { useEffect, useState } from 'react';
@@ -43,7 +43,7 @@ function AppContent() {
           <Route path='/about' element={<ProtectedRoute><About /></ProtectedRoute>} />
           <Route path='/contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
           <Route path='/review' element={<ProtectedRoute><Review /></ProtectedRoute>} />
-          <Route path='/wishlist' element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+
           <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie /></ProtectedRoute>} />
           <Route path='/book-show/:id' element={<ProtectedRoute><BookShow /></ProtectedRoute>} />
           <Route path='/my-bookings' element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
