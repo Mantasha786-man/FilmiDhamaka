@@ -139,6 +139,12 @@ function ProtectedRoute({ children }) {
           </span>
           <span
             className="cursor-pointer hover:underline p-1"
+            onClick={() => navigate("/wishlist")}
+          >
+            Wishlist
+          </span>
+          <span
+            className="cursor-pointer hover:underline p-1"
             onClick={() => navigate("/my-bookings")}
           >
             My Bookings
