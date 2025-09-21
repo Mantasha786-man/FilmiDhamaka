@@ -11,6 +11,14 @@ router.post('/add', authMiddleware, async (req, res) => {
     const { movieId } = req.body;
     const userId = req.userId;
 
+    // Validate input
+    if (!movieId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Movie ID is required'
+      });
+    }
+
     // Check if already in wishlist
     const existingWishlistItem = await Wishlist.findOne({
       'userDetails.userId': userId,
@@ -41,6 +49,14 @@ router.post('/add', authMiddleware, async (req, res) => {
       });
     }
 
+    // Validate movie has required fields
+    if (!movie.title || !movie.description || !movie.duration || !movie.genre || !movie.language || !movie.poster) {
+      return res.status(400).json({
+        success: false,
+        message: 'Movie data is incomplete. Please contact administrator.'
+      });
+    }
+
     const wishlistItem = new Wishlist({
       userDetails: {
         userId: user._id,
@@ -54,7 +70,7 @@ router.post('/add', authMiddleware, async (req, res) => {
         duration: movie.duration,
         genre: movie.genre,
         language: movie.language,
-        releaseDate: movie.releaseDate,
+        releaseDate: movie.releaseDate || new Date(),
         poster: movie.poster
       }
     });
@@ -81,6 +97,13 @@ router.post('/remove', authMiddleware, async (req, res) => {
   try {
     const { movieId } = req.body;
     const userId = req.userId;
+
+    if (!movieId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Movie ID is required'
+      });
+    }
 
     const wishlistItem = await Wishlist.findOneAndDelete({
       'userDetails.userId': userId,
@@ -135,6 +158,13 @@ router.get('/check/:movieId', authMiddleware, async (req, res) => {
   try {
     const { movieId } = req.params;
     const userId = req.userId;
+
+    if (!movieId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Movie ID is required'
+      });
+    }
 
     const wishlistItem = await Wishlist.findOne({
       'userDetails.userId': userId,
