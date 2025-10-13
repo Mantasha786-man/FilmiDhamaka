@@ -30,4 +30,4 @@ on Render This project demonstrates hands-on experience with MERN stack, authent
 
 ## 🌐 Live Demo (Optional)
 If GitHub Pages is enabled:
-👉 [View Live Site]([https://mantasha786-man.github.io/FilmiDhamaka/]https://filmidhamaka.netlify.app)
+👉 [View Live Site]([https://mantasha786-man.github.io/FilmiDhamaka/](https://filmidhamaka.netlify.app)
