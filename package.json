@@ -10,7 +10,6 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "antd": "^5.26.7",
     "bcryptjs": "^3.0.2",
@@ -23,5 +22,15 @@
     "mongoose": "^8.17.1",
     "nodemailer": "^6.10.1",
     "nodemon": "^3.1.10"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mantasha786-man/FilmiDhamaka.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Mantasha786-man/FilmiDhamaka/issues"
+  },
+  "homepage": "https://github.com/Mantasha786-man/FilmiDhamaka#readme",
+  "description": ""
 }

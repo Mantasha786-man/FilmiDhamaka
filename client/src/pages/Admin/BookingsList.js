@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Tag, Button, message } from 'antd';
+import { Table, Tag, Button, message, Popconfirm } from 'antd';
 import { HideLoading, ShowLoading } from '../../redux/loadersSlice';
 import { useDispatch } from 'react-redux';
-import { GetAllBookings, ConfirmBooking } from '../../apiscalls/Bookings';
+import { GetAllBookings, ConfirmBooking, AdminCancelBooking } from '../../apiscalls/Bookings';
 import moment from 'moment';
 
 function BookingsList() {
@@ -29,6 +29,23 @@ function BookingsList() {
     try {
       dispatch(ShowLoading());
       const response = await ConfirmBooking(bookingId);
+      if (response.success) {
+        message.success(response.message);
+        getBookings(); // Refresh the list
+      } else {
+        message.error(response.message);
+      }
+      dispatch(HideLoading());
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
+
+  const handleCancelBooking = async (bookingId) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await AdminCancelBooking(bookingId);
       if (response.success) {
         message.success(response.message);
         getBookings(); // Refresh the list
@@ -88,7 +105,10 @@ function BookingsList() {
       dataIndex: 'status',
       key: 'status',
       render: (status) => (
-        <Tag color={status === 'confirmed' ? 'green' : 'orange'}>
+        <Tag color={
+          status === 'confirmed' ? 'green' :
+          status === 'cancelled' ? 'red' : 'orange'
+        }>
           {status.toUpperCase()}
         </Tag>
       ),
@@ -103,14 +123,36 @@ function BookingsList() {
       title: 'Action',
       key: 'action',
       render: (record) => (
-        record.status === 'pending' && (
-          <Button 
-            type="primary" 
-            onClick={() => handleConfirmBooking(record._id)}
-          >
-            Confirm
-          </Button>
-        )
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {record.status === 'pending' && (
+            <>
+              <Button
+                type="primary"
+                onClick={() => handleConfirmBooking(record._id)}
+              >
+                Confirm
+              </Button>
+              <Popconfirm
+                title="Are you sure you want to cancel this booking?"
+                onConfirm={() => handleCancelBooking(record._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button danger>Cancel</Button>
+              </Popconfirm>
+            </>
+          )}
+          {record.status === 'confirmed' && (
+            <Popconfirm
+              title="Are you sure you want to cancel this confirmed booking?"
+              onConfirm={() => handleCancelBooking(record._id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button danger>Cancel</Button>
+            </Popconfirm>
+          )}
+        </div>
       ),
     },
   ];

@@ -107,3 +107,16 @@ export const CancelBooking = async (bookingId) => {
     }
 }
 
+// Admin cancel booking
+export const AdminCancelBooking = async (bookingId) => {
+    try {
+        const response = await axiosInstance.post(`/api/bookings/admin-cancel-booking/${bookingId}`);
+        return response.data;
+    } catch (error) {
+        return error.response?.data || {
+            success: false,
+            message: "Failed to cancel booking"
+        };
+    }
+}
+
