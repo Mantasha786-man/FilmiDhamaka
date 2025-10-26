@@ -12,6 +12,13 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 
 const app = express();
 
+// Handle preflight OPTIONS requests
+app.options('*', cors({
+  origin: ['https://filmidhamaka.netlify.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 // Allow CORS for all origins (frontend: localhost:3000 and netlify)
 app.use(cors({
   origin: ['https://filmidhamaka.netlify.app', 'http://localhost:3000'],
