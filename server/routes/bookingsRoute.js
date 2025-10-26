@@ -142,10 +142,10 @@ router.post('/confirm-booking/:bookingId', async (req, res) => {
         booking.status = 'confirmed';
         await booking.save();
 
-        // Send confirmation email
-        console.log('Sending confirmation email to:', booking.userEmail);
-        await sendBookingConfirmationEmail(booking.userEmail, booking);
-        console.log('Confirmation email sent successfully');
+        // Send confirmation email asynchronously (don't wait for it to complete)
+        sendBookingConfirmationEmail(booking.userEmail, booking)
+            .then(() => console.log('Confirmation email sent successfully to:', booking.userEmail))
+            .catch((error) => console.error('Error sending confirmation email:', error));
 
         res.status(200).json({ success: true, message: 'Booking confirmed successfully', data: booking });
     } catch (error) {
@@ -188,10 +188,10 @@ router.post('/admin-cancel-booking/:bookingId', async (req, res) => {
         booking.status = 'cancelled';
         await booking.save();
 
-        // Send cancellation email
-        console.log('Sending cancellation email to:', booking.userEmail);
-        await sendBookingCancellationEmail(booking.userEmail, booking);
-        console.log('Cancellation email sent successfully');
+        // Send cancellation email asynchronously (don't wait for it to complete)
+        sendBookingCancellationEmail(booking.userEmail, booking)
+            .then(() => console.log('Cancellation email sent successfully to:', booking.userEmail))
+            .catch((error) => console.error('Error sending cancellation email:', error));
 
         res.status(200).json({ success: true, message: 'Booking cancelled successfully', data: booking });
     } catch (error) {
