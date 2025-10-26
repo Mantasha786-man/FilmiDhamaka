@@ -1,0 +1,61 @@
+== Info:   Trying 127.0.0.1:5000...
+== Info: Connected to 127.0.0.1 (127.0.0.1) port 5000
+== Info: using HTTP/1.x
+=> Send header, 153 bytes (0x99)
+0000: POST /api/bookings/test-email HTTP/1.1
+0028: Host: 127.0.0.1:5000
+003e: User-Agent: curl/8.14.1
+0057: Accept: */*
+0064: Content-Type: application/json
+0084: Content-Length: 2
+0097: 
+=> Send data, 2 bytes (0x2)
+0000: {\
+== Info: upload completely sent off: 2 bytes
+<= Recv header, 26 bytes (0x1a)
+0000: HTTP/1.1 400 Bad Request
+<= Recv header, 23 bytes (0x17)
+0000: X-Powered-By: Express
+<= Recv header, 14 bytes (0xe)
+0000: Vary: Origin
+<= Recv header, 40 bytes (0x28)
+0000: Access-Control-Allow-Credentials: true
+<= Recv header, 45 bytes (0x2d)
+0000: Content-Security-Policy: default-src 'none'
+<= Recv header, 33 bytes (0x21)
+0000: X-Content-Type-Options: nosniff
+<= Recv header, 40 bytes (0x28)
+0000: Content-Type: text/html; charset=utf-8
+<= Recv header, 22 bytes (0x16)
+0000: Content-Length: 1153
+<= Recv header, 37 bytes (0x25)
+0000: Date: Sun, 26 Oct 2025 04:03:33 GMT
+<= Recv header, 24 bytes (0x18)
+0000: Connection: keep-alive
+<= Recv header, 23 bytes (0x17)
+0000: Keep-Alive: timeout=5
+<= Recv header, 2 bytes (0x2)
+0000: 
+<= Recv data, 1153 bytes (0x481)
+0000: <!DOCTYPE html>.<html lang="en">.<head>.<meta charset="utf-8">.<
+0040: title>Error</title>.</head>.<body>.<pre>SyntaxError: Expected pr
+0080: operty name or &#39;}&#39; in JSON at position 1 (line 1 column 
+00c0: 2)<br> &nbsp; &nbsp;at JSON.parse (&lt;anonymous&gt;)<br> &nbsp;
+0100:  &nbsp;at parse (C:\Users\UVESH SIDDIKI\Desktop\AWD project\node
+0140: _modules\body-parser\lib\types\json.js:77:19)<br> &nbsp; &nbsp;a
+0180: t C:\Users\UVESH SIDDIKI\Desktop\AWD project\node_modules\body-p
+01c0: arser\lib\read.js:123:18<br> &nbsp; &nbsp;at AsyncResource.runIn
+0200: AsyncScope (node:async_hooks:211:14)<br> &nbsp; &nbsp;at invokeC
+0240: allback (C:\Users\UVESH SIDDIKI\Desktop\AWD project\node_modules
+0280: \raw-body\index.js:238:16)<br> &nbsp; &nbsp;at done (C:\Users\UV
+02c0: ESH SIDDIKI\Desktop\AWD project\node_modules\raw-body\index.js:2
+0300: 27:7)<br> &nbsp; &nbsp;at IncomingMessage.onEnd (C:\Users\UVESH 
+0340: SIDDIKI\Desktop\AWD project\node_modules\raw-body\index.js:287:7
+0380: )<br> &nbsp; &nbsp;at IncomingMessage.emit (node:events:507:28)<
+03c0: br> &nbsp; &nbsp;at endReadableNT (node:internal/streams/readabl
+0400: e:1696:12)<br> &nbsp; &nbsp;at process.processTicksAndRejections
+0440:  (node:internal/process/task_queues:90:21)</pre>.</body>.</html>
+0480: .
+== Info: Connection #0 to host 127.0.0.1 left intact
+== Info: URL rejected: Bad hostname
+== Info: closing connection #-1

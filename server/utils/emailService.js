@@ -1,16 +1,33 @@
 const nodemailer = require('nodemailer');
 
-// Create transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
+// Create transporter with SMTP configuration
+const transporter = nodemailer.createTransporter({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+// Verify transporter connection
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('Transporter verification failed:', error);
+  } else {
+    console.log('Transporter is ready to send emails');
   }
 });
 
 // Send booking confirmation email
 const sendBookingConfirmationEmail = async (userEmail, bookingDetails) => {
+  console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
+  console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'Set' : 'Not set');
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: userEmail,
@@ -35,10 +52,12 @@ const sendBookingConfirmationEmail = async (userEmail, bookingDetails) => {
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log('Confirmation email sent to:', userEmail);
+    console.log('Attempting to send confirmation email to:', userEmail);
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Confirmation email sent successfully to:', userEmail, 'Message ID:', info.messageId);
   } catch (error) {
-    console.error('Error sending confirmation email:', error);
+    console.error('Error sending confirmation email:', error.message);
+    console.error('Error details:', error);
   }
 };
 
@@ -68,8 +87,8 @@ const sendBookingCancellationEmail = async (userEmail, bookingDetails) => {
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log('Cancellation email sent to:', userEmail);
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Cancellation email sent to:', userEmail, 'Message ID:', info.messageId);
   } catch (error) {
     console.error('Error sending cancellation email:', error);
   }

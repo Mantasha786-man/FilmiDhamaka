@@ -143,7 +143,9 @@ router.post('/confirm-booking/:bookingId', async (req, res) => {
         await booking.save();
 
         // Send confirmation email
+        console.log('Sending confirmation email to:', booking.userEmail);
         await sendBookingConfirmationEmail(booking.userEmail, booking);
+        console.log('Confirmation email sent successfully');
 
         res.status(200).json({ success: true, message: 'Booking confirmed successfully', data: booking });
     } catch (error) {
@@ -187,12 +189,39 @@ router.post('/admin-cancel-booking/:bookingId', async (req, res) => {
         await booking.save();
 
         // Send cancellation email
+        console.log('Sending cancellation email to:', booking.userEmail);
         await sendBookingCancellationEmail(booking.userEmail, booking);
+        console.log('Cancellation email sent successfully');
 
         res.status(200).json({ success: true, message: 'Booking cancelled successfully', data: booking });
     } catch (error) {
         console.error('Error cancelling booking:', error);
         res.status(500).json({ success: false, message: 'Failed to cancel booking', error: error.message });
+    }
+});
+
+// Test email endpoint
+router.post('/test-email', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Email is required' });
+        }
+
+        console.log('Testing email send to:', email);
+        await sendBookingConfirmationEmail(email, {
+            movieName: 'Test Movie',
+            theaterName: 'Test Theater',
+            showDate: new Date(),
+            showTime: '10:00 AM',
+            seats: ['A1', 'A2'],
+            totalAmount: 200
+        });
+
+        res.status(200).json({ success: true, message: 'Test email sent successfully' });
+    } catch (error) {
+        console.error('Error sending test email:', error);
+        res.status(500).json({ success: false, message: 'Failed to send test email', error: error.message });
     }
 });
 
