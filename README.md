@@ -6,7 +6,7 @@ monitoring, and user management User panel to browse movies, select seats, book 
 JWTbased authentication for secure login Responsive and interactive UI using Ant Design components Deployment: Hosted frontend on Netlify and backend 
 on Render This project demonstrates hands-on experience with MERN stack, authentication, CRUD operations, and full-stack web development best practices.**.
 
-##Output
+Output
 <img width="461" height="493" alt="Image" src="https://github.com/user-attachments/assets/4788d853-2728-47f6-9f2e-3ce541c971a2" />
 <img width="469" height="426" alt="Image" src="https://github.com/user-attachments/assets/e46ba5ae-6bea-4216-b821-ea8b414feccf" />
 <img width="1883" height="891" alt="Image" src="https://github.com/user-attachments/assets/36d16148-a5e7-4b9d-9f9e-0935c99d5db9" />
